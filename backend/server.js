@@ -9,6 +9,7 @@ const instructorRoutes = require("./routes/instructorRoutes");
 const tagRoutes = require("./routes/tagRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 const path = require("path");
@@ -43,6 +44,7 @@ app.use("/api/v1/instructors", instructorRoutes);
 app.use("/api/v1/tags", tagRoutes);
 app.use("/api/v1/courses", courseRoutes);
 app.use("/api/v1/testimonials", testimonialRoutes);
+app.use("/api/v1/contacts", contactRoutes);
 
 // Image upload route | Static folder for serving images
 app.use("/uploads", express.static(path.join(__dirname, "uploads/files")));
