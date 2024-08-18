@@ -15,7 +15,7 @@ const instructorSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
-  expertise: {
+  qualifications: {
     type: [String], // Array of expertise fields
   },
   socialLinks: {

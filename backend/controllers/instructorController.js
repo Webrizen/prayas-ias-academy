@@ -3,12 +3,20 @@ const Instructor = require("../models/Instructor");
 // Create a new instructor
 exports.createInstructor = async (req, res) => {
   try {
-    const { name, bio, photoUrl, experience, qualifications } = req.body;
+    const {
+      firstName,
+      lastName,
+      bio,
+      profilePicture,
+      experience,
+      qualifications,
+    } = req.body;
 
     const instructor = new Instructor({
-      name,
+      firstName,
+      lastName,
       bio,
-      photoUrl,
+      profilePicture,
       experience,
       qualifications,
     });
@@ -49,11 +57,18 @@ exports.getInstructorById = async (req, res) => {
 // Update an instructor
 exports.updateInstructor = async (req, res) => {
   try {
-    const { name, bio, photoUrl, experience, qualifications } = req.body;
+    const {
+      firstName,
+      lastName,
+      bio,
+      profilePicture,
+      experience,
+      qualifications,
+    } = req.body;
 
     const instructor = await Instructor.findByIdAndUpdate(
       req.params.id,
-      { name, bio, photoUrl, experience, qualifications },
+      { firstName, lastName, bio, profilePicture, experience, qualifications },
       { new: true }
     );
 
