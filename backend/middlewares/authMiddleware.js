@@ -1,17 +1,20 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 // Middleware to protect routes
 exports.protect = async (req, res, next) => {
   let token;
-  
+
   // Check if token exists
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
   }
 
   if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: "Not authorized, no token" });
   }
 
   try {
@@ -22,21 +25,32 @@ exports.protect = async (req, res, next) => {
     req.user = await User.findById(decoded.userId);
 
     if (!req.user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: "User not found" });
     }
 
     next();
   } catch (error) {
     console.error(error);
-    res.status(401).json({ message: 'Not authorized, token failed' });
+    res.status(401).json({ message: "Not authorized, token failed" });
   }
 };
 
 // Middleware to restrict routes to admin users only
 exports.admin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
+  if (req.user && req.user.role === "admin") {
     next();
   } else {
-    res.status(403).json({ message: 'Access denied. Admins only' });
+    res.status(403).json({ message: "Access denied. Admins only" });
+  }
+};
+
+// Middleware to restrict routes to teacher users only
+exports.teachers = (req, res, next) => {
+  if (req.user && req.user.role === "teacher") {
+    next();
+  } else if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res.status(403).json({ message: "Access denied. Teachers & admin only" });
   }
 };

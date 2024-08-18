@@ -15,6 +15,10 @@ const courseSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    thumbnail: {
+      type: String,
+      required: true,
+    },
     instructors: [
       {
         type: mongoose.Schema.Types.ObjectId,

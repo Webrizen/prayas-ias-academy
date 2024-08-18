@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const categoryRoutes = require("./routes/categoryRoutes");
 const instructorRoutes = require("./routes/instructorRoutes");
 const tagRoutes = require("./routes/tagRoutes");
+const courseRoutes = require("./routes/courseRoutes"); 
 const PORT = process.env.PORT || 5000;
 
 
@@ -31,6 +32,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/instructors", instructorRoutes);
 app.use("/api/v1/tags", tagRoutes);
+app.use("/api/v1/courses", courseRoutes);
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
