@@ -16,17 +16,15 @@ router.post("/", (req, res) => {
       return res.status(400).json({ success: false, message: "No file uploaded" });
     }
 
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    const fileUrl = `${baseUrl}/uploads/files/${req.file.filename}`;
+
     res.json({
       success: true,
       message: "File uploaded successfully!",
-      fileUrl: `http://localhost:5000/uploads/files/${req.file.filename}`,
+      fileUrl: fileUrl,
     });
   });
-});
-
-router.get("/:filename", (req, res) => {
-  const { filename } = req.params;
-  res.sendFile(path.join(__dirname, "uploads/files", filename));
 });
 
 module.exports = router;
