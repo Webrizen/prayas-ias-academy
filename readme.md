@@ -15,10 +15,6 @@ Here's a more comprehensive feature list:
    - **Integrated CMS (e.g., Strapi, Contentful):** Enable the client to easily update and manage blog posts and resources.
    - **SEO-Friendly Blogging:** Implement features like category tags, author pages, and related posts for better user engagement and SEO.
 
-### **5. Online Enrollment & Payment Gateway**
-   - **Secure Payment Processing:** Integrate with payment gateways like Razorpay or Stripe for secure online payments.
-   - **Automated Email Notifications:** Send confirmation emails and reminders for payments and enrollments.
-
 ### **6. Admin | Student | Teacher Dashboards**
    - **Admin Dashboard:** Manage courses, view student enrollments, handle payments, and update website content.
    - **Student Dashboard:** Access to enrolled courses, progress tracking, downloadable materials, and certificates.
@@ -39,7 +35,7 @@ Here's a more comprehensive feature list:
 
 ### **11. Analytics & Reporting**
    - **Google Analytics Integration:** Track user behavior, conversions, and page performance.
-   - **Dashboard Reporting:** Basic reporting features in the admin dashboard for enrollments, payments, and site performance.
+   - **Dashboard Reporting:** Basic reporting features in the admin dashboard.
 
 ### **12. Social Media Integration**
    - **Social Sharing:** Add social sharing buttons to blog posts and resources.
@@ -48,7 +44,24 @@ Here's a more comprehensive feature list:
 ### **13. Newsletter Signup**
    - **Mailchimp Integration:** Collect emails and send newsletters directly from the website.
 
-### **14. Email Marketing(optional - need 10k extra for this)**
-   - **Automated Campaigns:** Integrate with email marketing tools to send course reminders, new course announcements, and follow-ups.
+This feature list is balanced for a ₹20,000 budget, ensuring high functionality while maintaining quality and performance.
 
-This feature list is balanced for a ₹55,000 budget, ensuring high functionality while maintaining quality and performance.
+---
+
+# *Milestones*
+
+1. **Milestone 1: Backend Completion**
+   - **Deliverables:** Complete backend functionality, including authentication, CRUD operations for all models (courses, categories, instructors, etc.), file uploads, and analytics.
+   - **Payment:** 50% of the total budget (₹10,000).
+
+2. **Milestone 2: Students (Main Website) Frontend**
+   - **Deliverables:** Complete frontend design and development for students, including course listings, search, and contact form functionality.
+   - **Payment:** 20% of the total budget (₹4,000).
+
+3. **Milestone 3: Teachers Frontend**
+   - **Deliverables:** Complete frontend design and development for teachers, including their profiles and any related features.
+   - **Payment:** 15% of the total budget (₹3,000).
+
+4. **Milestone 4: Admin Panel Frontend**
+   - **Deliverables:** Complete frontend design and development for the admin panel, including user management, content management, and reporting features.
+   - **Payment:** 15% of the total budget (₹3,000).
