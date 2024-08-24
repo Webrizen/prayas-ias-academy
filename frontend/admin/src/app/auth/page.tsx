@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 export default function Home() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const router = useRouter();
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -53,6 +53,14 @@ export default function Home() {
             setIsLoading(false);
         }
     };
+
+    if (isAuthenticated) {
+        toast.success("so, you're already logged in - we're redirecting you to the dashboard.", {
+            duration: 4000,
+            position: "bottom-center",
+        });
+        router.push("/dashboard");
+    }
 
     return (
         <>

@@ -26,7 +26,7 @@ const Navbar = () => {
                         alt="Logo"
                         width={500}
                         height={500}
-                        className="h-full w-auto"
+                        className="h-8 w-auto"
                     />
                     <span>Prayas IAS Academy</span>
                 </Link>
