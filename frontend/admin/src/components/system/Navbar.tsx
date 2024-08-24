@@ -6,9 +6,13 @@ import Link from "next/link";
 import Logo from "@/assets/logo.png";
 import { Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
     const { setTheme } = useTheme();
+    const { isAuthenticated, logout } = useAuth();
+
     return (
         <header className="p-2 bg-[rgba(225,225,225,0.1)] backdrop-blur-3xl z-50 sticky top-0">
             <div className="md:container mx-auto flex justify-between items-center">
@@ -51,11 +55,33 @@ const Navbar = () => {
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-                    <Link href="/auth">
+                    {isAuthenticated ? (
+                        <Dropdown placement="bottom-end" backdrop="blur">
+                            <DropdownTrigger>
+                                <Avatar className="cursor-pointer h-8 w-auto">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="User Menu">
+                                <DropdownItem key="profile" description="View your profile" href="/profile">
+                                    Profile
+                                </DropdownItem>
+                                <DropdownItem key="settings" description="Adjust your preferences" showDivider href="/settings">
+                                    Settings
+                                </DropdownItem>
+                                <DropdownItem key="logout" description="Sign out of your account" className="text-danger" color="danger" onClick={logout}>
+                                    Logout
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    ) : (
                         <Button className="rounded hover:backdrop-blur-lg">
-                            Login
+                            <Link href="/auth">
+                                Login
+                            </Link>
                         </Button>
-                    </Link>
+                    )}
                 </div>
             </div>
         </header>
