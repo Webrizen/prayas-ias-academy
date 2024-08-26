@@ -10,22 +10,16 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, loading } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        const checkAuth = async () => {
-            if (!isAuthenticated) {
-                router.push("/auth");
-            }
-            setIsLoading(false);
-        };
+        if (!loading && !isAuthenticated) {
+            router.back();
+        }
+    }, [isAuthenticated, loading, router]);
 
-        checkAuth();
-    }, [isAuthenticated, router]);
-
-    if (isLoading) {
+    if (loading) {
         return (
             <div className="flex items-center justify-center h-screen">
                 <Spinner color="primary" />

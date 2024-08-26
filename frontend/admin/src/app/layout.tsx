@@ -6,6 +6,7 @@ import Navbar from "@/components/system/Navbar";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { CookiesProvider } from 'next-client-cookies/server';
 import { AuthProvider } from "@/contexts/AuthContext";
+import Transition from "@/components/system/Transition";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -24,17 +25,17 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={dmSans.className}>
           <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextUIProvider>
-              <Navbar />
-              {children}
-            </NextUIProvider>
-          </ThemeProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NextUIProvider>
+                <Navbar />
+                <Transition>{children}</Transition>
+              </NextUIProvider>
+            </ThemeProvider>
           </AuthProvider>
         </body>
       </html>

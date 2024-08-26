@@ -59,7 +59,7 @@ export default function Home() {
             duration: 4000,
             position: "bottom-center",
         });
-        router.push("/dashboard");
+        router.back();
     }
 
     return (
