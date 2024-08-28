@@ -10,6 +10,7 @@ exports.createInstructor = async (req, res) => {
       profilePicture,
       experience,
       qualifications,
+      socialLinks
     } = req.body;
 
     const instructor = new Instructor({
@@ -19,6 +20,7 @@ exports.createInstructor = async (req, res) => {
       profilePicture,
       experience,
       qualifications,
+      socialLinks
     });
 
     await instructor.save();
@@ -64,11 +66,12 @@ exports.updateInstructor = async (req, res) => {
       profilePicture,
       experience,
       qualifications,
+      socialLinks
     } = req.body;
 
     const instructor = await Instructor.findByIdAndUpdate(
       req.params.id,
-      { firstName, lastName, bio, profilePicture, experience, qualifications },
+      { firstName, lastName, bio, profilePicture, experience, qualifications, socialLinks },
       { new: true }
     );
 
