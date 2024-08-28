@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/upload");
 const path = require("path");
+const fs = require("fs");
 
 // Upload endpoint
 router.post("/", (req, res) => {
@@ -26,5 +27,25 @@ router.post("/", (req, res) => {
     });
   });
 });
+
+// Get all assets endpoint
+router.get("/all", (req, res) => {
+  const directoryPath = path.join(__dirname, "../uploads/files");
+
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: "Unable to scan files" });
+    }
+
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    const fileUrls = files.map(file => `${baseUrl}/uploads/files/${file}`);
+
+    res.json({
+      success: true,
+      files: fileUrls,
+    });
+  });
+});
+
 
 module.exports = router;
