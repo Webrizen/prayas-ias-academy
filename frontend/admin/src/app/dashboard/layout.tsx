@@ -1,5 +1,6 @@
 import ProtectedRoute from "@/components/security/ProtectedRoute";
 import Sidebar from "@/components/system/Sidebar";
+import Transition from "@/components/system/Transition";
 
 export default function DashboardLayout({ children }: any) {
     const sidebarNavItems = [
@@ -82,9 +83,10 @@ export default function DashboardLayout({ children }: any) {
                     <div className="w-full">
                         <Sidebar items={sidebarNavItems} />
                     </div>
-                    <div className="w-full md:p-5">{children}</div>
+                    <div className="w-full md:p-5"><Transition>{children}</Transition></div>
                 </div>
             </section>
+
         </ProtectedRoute>
     );
 }

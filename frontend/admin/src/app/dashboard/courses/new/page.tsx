@@ -72,14 +72,14 @@ export default function page() {
                     variant="underlined"
                   >
                     <SelectItem key="1" value="Rohit">Rohit</SelectItem>
-                      <SelectItem key="2" value="harshit">Harshit</SelectItem>
-                      <SelectItem key="3" value="vikram">Vikram</SelectItem>
-                      <SelectItem key="4" value="cristina">Cristina</SelectItem>
+                    <SelectItem key="2" value="harshit">Harshit</SelectItem>
+                    <SelectItem key="3" value="vikram">Vikram</SelectItem>
+                    <SelectItem key="4" value="cristina">Cristina</SelectItem>
                   </Select>
                 </div>
               </TabsContent>
               <TabsContent value="details" className="space-y-4">
-                <div className="flex flex-row gap-x-2 items-center">
+                <div className="flex flex-row gap-x-2 items-end">
                   <Select
                     label="Tags"
                     placeholder="Select Tags"
@@ -93,47 +93,58 @@ export default function page() {
                     <SelectItem key="4" value="marketing">Marketing</SelectItem>
                   </Select>
                   <Button type="button" variant="ghost" onClick={() => addField(setTags)}>
-                    <Plus className="mr-2 h-4 w-4" /> Add Tag
+                    Add Tag
                   </Button>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="mode">Mode</Label>
+                <div className="flex flex-row gap-x-3 items-center">
                   <Select
                     label="Mode"
                     placeholder="Select course mode"
                     selectionMode="multiple"
                     radius="sm"
+                    variant="underlined"
                   >
                     <SelectItem key="1" value="online">online</SelectItem>
-                      <SelectItem key="2" value="offline">offline</SelectItem>
-                      <SelectItem key="3" value="Hybrid">Hybrid</SelectItem>
+                    <SelectItem key="2" value="offline">offline</SelectItem>
+                    <SelectItem key="3" value="Hybrid">Hybrid</SelectItem>
                   </Select>
+                  <Select
+                    label="Enable Live Classes"
+                    placeholder="Select"
+                    radius="sm"
+                    variant="underlined"
+                  >
+                    <SelectItem key="1" value="yes">Yes</SelectItem>
+                    <SelectItem key="2" value="no">No</SelectItem>
+                    <SelectItem key="3" value="n/a">N/A</SelectItem>
+                  </Select>
+                  <div className="space-y-2">
+                    <Label>Schedule</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !date && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label>Schedule</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
+
                 <div className="space-y-2">
                   <Label>Key Features</Label>
                   {keyFeatures.map((feature, index) => (
@@ -157,18 +168,39 @@ export default function page() {
                   </Button>
                 </div>
               </TabsContent>
-              <TabsContent value="pricing" className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="fee">Course Fee</Label>
-                  <Input id="fee" type="number" placeholder="Enter course fee" />
+              <TabsContent value="pricing" className="space-y-2">
+                <div className="flex flex-row gap-x-5 items-center w-full">
+                  <div className="space-y-2 w-full">
+                    <Input
+                      id="fee"
+                      label="Course Fee"
+                      type="number"
+                      placeholder="0.00"
+                      variant="underlined"
+                      startContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">₹</span>
+                        </div>
+                      } />
+                  </div>
+                  <div className="space-y-2 w-full">
+                    <Input id="discount"
+                      label="Discount"
+                      type="number"
+                      placeholder="Enter discount percentage"
+                      variant="underlined"
+                      startContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">%</span>
+                        </div>
+                      } />
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="discount">Discount</Label>
-                  <Input id="discount" type="number" placeholder="Enter discount percentage" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Perks</Label>
-                  <Textarea placeholder="Enter course perks (one per line)" />
+                  <Textarea
+                    label="Perks"
+                    variant="underlined"
+                    placeholder="Enter course perks (one per line)" />
                 </div>
               </TabsContent>
               <TabsContent value="media" className="space-y-4">
@@ -184,10 +216,7 @@ export default function page() {
                   <Label htmlFor="course-videos">Course Videos</Label>
                   <Input id="course-videos" type="file" accept="video/*" multiple />
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Switch id="live-classes" />
-                  <Label htmlFor="live-classes">Enable Live Classes</Label>
-                </div>
+                
               </TabsContent>
             </Tabs>
           </CardContent>
