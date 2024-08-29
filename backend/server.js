@@ -12,13 +12,13 @@ const testimonialRoutes = require("./routes/testimonialRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const cors = require("cors");
-const PORT = process.env.PORT || 5000;
 const path = require("path");
 const uploadRoute = require("./routes/imageRoutes");
 
-// Connect to database
-connectDB();
 dotenv.config();
+
+// Connect to the database
+connectDB();
 
 const app = express();
 
@@ -38,6 +38,10 @@ app.use(
 app.get("/api/v1", (req, res) => {
   res.send("Welcome to Prayas IAS Academy! Your success for Exams.");
 });
+
+// Static folder for serving images (Ensure this is before other routes)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Other routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/categories", categoryRoutes);
@@ -48,8 +52,9 @@ app.use("/api/v1/testimonials", testimonialRoutes);
 app.use("/api/v1/contacts", contactRoutes);
 app.use("/api/v1/analytics", analyticsRoutes);
 
-// Image upload route | Static folder for serving images
-app.use("/uploads", express.static(path.join(__dirname, "uploads/files")));
+// Image upload route
 app.use("/api/v1/upload", uploadRoute);
 
+// Start the server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

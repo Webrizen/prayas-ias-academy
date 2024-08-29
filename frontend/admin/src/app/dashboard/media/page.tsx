@@ -1,7 +1,9 @@
 "use client";
-import React, { useState, useCallback } from 'react';
+
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Search, Upload, X, Maximize2 } from 'lucide-react';
+import axios, { AxiosProgressEvent } from 'axios';
+import { Search, Upload, Maximize2 } from 'lucide-react';
 import { Input } from '@nextui-org/react';
 import { Button } from "@/components/ui/button";
 import {
@@ -12,35 +14,82 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 
-// Mock data for demonstration
-const initialMedia = [
-  { id: 1, name: 'image1.jpg', type: 'image', url: 'https://placehold.co/500x500' },
-  { id: 2, name: 'document.pdf', type: 'document', url: 'https://placehold.co/500x500' },
-  { id: 3, name: 'video.mp4', type: 'video', url: 'https://placehold.co/500x500' },
-]
+// Define the media type
+interface MediaItem {
+  id: number;
+  name: string;
+  type: string;
+  url: string;
+}
 
-export default function page() {
-  const [media, setMedia] = useState(initialMedia)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedMedia, setSelectedMedia] = useState(null)
+export default function Page() {
+  const [media, setMedia] = useState<MediaItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [progress, setProgress] = useState<number>(0); // Upload progress state
 
-  const onDrop = useCallback((acceptedFiles: any[]) => {
-    // Handle file upload logic here
-    const newMedia = acceptedFiles.map((file: Blob | MediaSource, index: number) => ({
-      id: media.length + index + 1,
-      name: file.name,
-      type: file.type.split('/')[0],
-      url: URL.createObjectURL(file)
-    }))
-    setMedia([...media, ...newMedia])
-  }, [media])
+  // Fetch media items from the backend
+  useEffect(() => {
+    const fetchMedia = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/upload/all`);
+        // Map response data to MediaItem
+        const fetchedMedia = response.data.files.map((url: string, index: number) => ({
+          id: index,  // Use index as ID or generate a unique ID if necessary
+          name: url.split('/').pop() || 'Unknown',  // Extract file name from URL
+          type: url.split('.').pop() || 'unknown',  // Extract file type from URL
+          url: url
+        }));
+        setMedia(fetchedMedia);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching media:', error);
+      }
+    };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    fetchMedia();
+  }, []);
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    try {
+      const formData = new FormData();
+      acceptedFiles.forEach(file => {
+        formData.append('file', file);
+      });
+  
+      const uploadConfig = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          if (progressEvent.total) {
+            const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            console.log(`Progress: ${progress}%`);
+            // Update your progress state here if needed
+          }
+        }
+      };
+  
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/upload`, formData, uploadConfig);
+  
+      console.log(response.data);
+      const newMedia = response.data.fileUrl;
+      setMedia(prevMedia => [
+        ...prevMedia,
+        { id: Date.now(), name: acceptedFiles[0].name, type: 'file', url: newMedia }
+      ]);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }, []);  
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const filteredMedia = media.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -66,6 +115,7 @@ export default function page() {
               <DialogTitle>Upload Media</DialogTitle>
               <DialogDescription>
                 Drag and drop files here or click to select files
+                {progress > 0 && <Progress value={progress} className='mt-3' />}
               </DialogDescription>
             </DialogHeader>
             <div
@@ -88,21 +138,21 @@ export default function page() {
         {filteredMedia.map((item) => (
           <div key={item.id}>
             <div className="relative group">
-            <img
-              src={item.url}
-              alt={item.name}
-              className="w-full h-40 object-cover rounded-lg shadow-md"
-            />
-            <div className="absolute left-0 right-0 bottom-0 top-0 my-auto mx-auto w-full h-full inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSelectedMedia(item)}
-                className="text-white"
-              >
-                <Maximize2 className="h-6 w-6" />
-              </Button>
-            </div>
+              <img
+                src={item.url}
+                alt={item.name}
+                className="w-full h-40 object-cover rounded-lg shadow-md"
+              />
+              <div className="absolute left-0 right-0 bottom-0 top-0 my-auto mx-auto w-full h-full inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSelectedMedia(item)}
+                  className="text-white"
+                >
+                  <Maximize2 className="h-6 w-6" />
+                </Button>
+              </div>
             </div>
             <p className="mt-2 text-sm truncate">{item.name}</p>
           </div>
@@ -126,5 +176,5 @@ export default function page() {
         </Dialog>
       )}
     </div>
-  )
+  );
 }
