@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios, { AxiosProgressEvent } from 'axios';
-import { Search, Upload, Maximize2 } from 'lucide-react';
+import { Search, Upload, Maximize2, Trash } from 'lucide-react';
 import { Input } from '@nextui-org/react';
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
+import toast from 'react-hot-toast';
 
 // Define the media type
 interface MediaItem {
@@ -29,6 +30,7 @@ export default function Page() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [progress, setProgress] = useState<number>(0); // Upload progress state
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   // Fetch media items from the backend
   useEffect(() => {
@@ -46,6 +48,7 @@ export default function Page() {
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching media:', error);
+        toast.error('Failed to fetch media.');
       }
     };
 
@@ -66,8 +69,8 @@ export default function Page() {
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           if (progressEvent.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setProgress(progress);
             console.log(`Progress: ${progress}%`);
-            // Update your progress state here if needed
           }
         }
       };
@@ -80,10 +83,28 @@ export default function Page() {
         ...prevMedia,
         { id: Date.now(), name: acceptedFiles[0].name, type: 'file', url: newMedia }
       ]);
+      setIsDialogOpen(false); // Close the modal after successful upload
+      setProgress(0); // Reset the progress to 0
+      toast.success('File uploaded successfully!');
     } catch (error) {
       console.error('Error uploading file:', error);
+      setProgress(0); // Reset the progress to 0 on error
+      toast.error('Failed to upload file.');
     }
   }, []);  
+
+  const deleteMedia = async (item: MediaItem) => {
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_BASEURL}/upload`, {
+        data: { fileUrl: item.url }
+      });
+      setMedia(prevMedia => prevMedia.filter(mediaItem => mediaItem.id !== item.id));
+      toast.success('File deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      toast.error('Failed to delete file.');
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -106,7 +127,7 @@ export default function Page() {
             startContent={<Search className="h-4 w-4 text-gray-500 mr-2" />}
           />
         </div>
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button>Upload New Media</Button>
           </DialogTrigger>
@@ -143,7 +164,7 @@ export default function Page() {
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-lg shadow-md"
               />
-              <div className="absolute left-0 right-0 bottom-0 top-0 my-auto mx-auto w-full h-full inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center">
+              <div className="absolute left-0 right-0 bottom-0 top-0 my-auto mx-auto w-full h-full inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center space-x-4">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -151,6 +172,14 @@ export default function Page() {
                   className="text-white"
                 >
                   <Maximize2 className="h-6 w-6" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => deleteMedia(item)}
+                  className="text-white"
+                >
+                  <Trash className="h-6 w-6" />
                 </Button>
               </div>
             </div>
