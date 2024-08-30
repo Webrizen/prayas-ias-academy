@@ -24,8 +24,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setLoading(false);
     }, [cookies]);
 
-    const login = ({ jwt } : any) => {
-        cookies.set("jwt", jwt);
+    const login = (token: string) => {
+        cookies.set("jwt", token);
         setIsAuthenticated(true);
     };
 
