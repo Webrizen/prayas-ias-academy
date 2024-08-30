@@ -20,6 +20,7 @@ export default function Page() {
     const [socialLinks, setSocialLinks] = useState<{ linkedin: string; twitter: string }>({ linkedin: '', twitter: '' });
     const cookies = useCookies();
     const jwtToken = cookies.get('jwt');
+    const [loading, setLoading] = useState(false);
 
     const handleQualificationChange = (index: number, value: string) => {
         const newQualifications = [...qualifications];
@@ -56,6 +57,7 @@ export default function Page() {
     };
 
     const handleSubmit = async () => {
+        setLoading(true);
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_BASEURL}/instructors`, {
                 firstName,
@@ -85,6 +87,8 @@ export default function Page() {
         } catch (error) {
             toast.error('Failed to add instructor');
             console.error('Error adding instructor:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -104,6 +108,7 @@ export default function Page() {
                                 label="First Name"
                                 variant='underlined'
                                 value={firstName}
+                                disabled={loading}
                                 onChange={(e) => setFirstName(e.target.value)}
                             />
                         </div>
@@ -113,6 +118,7 @@ export default function Page() {
                                 placeholder="Enter last name"
                                 label="Last Name"
                                 variant='underlined'
+                                disabled={loading}
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
                             />
@@ -126,6 +132,7 @@ export default function Page() {
                             className="min-h-[150px]"
                             label="Bio"
                             variant='underlined'
+                            disabled={loading}
                             value={bio}
                             onChange={(e) => setBio(e.target.value)}
                         />
@@ -137,6 +144,7 @@ export default function Page() {
                             placeholder="Profile Picture URL"
                             label="Profile Picture"
                             variant='underlined'
+                            disabled={loading}
                             value={profilePicture || ''}
                             readOnly
                         />
@@ -167,6 +175,7 @@ export default function Page() {
                                     onChange={(e) => handleQualificationChange(index, e.target.value)}
                                     placeholder={`Qualification ${index + 1}`}
                                     label="Qualifications" variant='underlined'
+                                    disabled={loading}
                                 />
                                 <Button
                                     type="button"
@@ -181,6 +190,7 @@ export default function Page() {
                                     <Button
                                         type="button"
                                         variant="outline"
+                                        disabled={loading}
                                         size="icon"
                                         onClick={() => setQualifications([...qualifications, ''])}
                                     >
@@ -198,6 +208,7 @@ export default function Page() {
                                 label="LinkedIn URL"
                                 variant='underlined'
                                 value={socialLinks.linkedin}
+                                disabled={loading}
                                 onChange={(e) => setSocialLinks(prev => ({ ...prev, linkedin: e.target.value }))}
                             />
                             <Input
@@ -205,6 +216,7 @@ export default function Page() {
                                 label="Twitter URL"
                                 variant='underlined'
                                 value={socialLinks.twitter}
+                                disabled={loading}
                                 onChange={(e) => setSocialLinks(prev => ({ ...prev, twitter: e.target.value }))}
                             />
                         </div>
@@ -243,8 +255,8 @@ export default function Page() {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button className="w-full" onClick={handleSubmit}>
-                        Add Instructor
+                    <Button className="w-full" onClick={handleSubmit} disabled={loading}>
+                    {loading ? 'Adding Instructor...' : 'Add Instructor'}
                     </Button>
                 </CardFooter>
             </Card>
