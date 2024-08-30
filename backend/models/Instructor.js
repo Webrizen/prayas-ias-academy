@@ -23,7 +23,7 @@ const instructorSchema = new mongoose.Schema({
     twitter: { type: String },
   },
   experience: {
-    type: Number, // In years
+    type: [String], // Changed to an array of strings
     required: true,
   },
 });
