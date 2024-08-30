@@ -26,6 +26,7 @@ const instructorSchema = new mongoose.Schema({
     type: [String], // Changed to an array of strings
     required: true,
   },
+  { timestamps: true }
 });
 
 const Instructor = mongoose.model('Instructor', instructorSchema);
