@@ -34,21 +34,17 @@ const courseSchema = new mongoose.Schema(
     ],
     mode: {
       type: String,
-      enum: ["Online", "Offline"],
+      enum: ["Online", "Offline", "hybrid"],
       required: true,
     },
     schedule: [
       {
-        day: {
-          type: String,
+        startDate: {
+          type: Date,
           required: true,
         },
-        startTime: {
-          type: String,
-          required: true,
-        },
-        endTime: {
-          type: String,
+        EndDate: {
+          type: Date,
           required: true,
         },
       },
