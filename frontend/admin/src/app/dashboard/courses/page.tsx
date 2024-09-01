@@ -1,238 +1,123 @@
 "use client";
-import React, { useState } from 'react';
-import { Book, Edit, Eye, MoreVertical, Plus, Search, Trash2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Book, Edit, Eye, Plus, Search, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { Input, Textarea } from '@nextui-org/react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
+import { Input } from '@nextui-org/react';
 import Link from 'next/link';
+import axios from 'axios';
 
 interface Course {
-    id: number;
+    _id: number;
     title: string;
-    instructor: string;
-    students: number;
-    rating: number;
-    status: 'Active' | 'Inactive';
+    description: string;
+    category: string;
+    instructors: string[];
+    tags: string[];
+    mode: string;
+    enableLiveClasses: string;
+    schedule: { startDate: string; endDate: string }[];
+    keyFeatures: string[];
+    fee: number;
+    discount: number;
+    perks: string;
+    thumbnail: string;
 }
 
-interface CoursesManagementProps {
-    // Define any props if needed
-}
-
-interface EditCourse extends Partial<Course> {
-    id: number;
-}
-
-// Sample course data
-const initialCourses: Course[] = [
-    { id: 1, title: "Introduction to React", instructor: "John Doe", students: 150, rating: 4.8, status: "Active" },
-    { id: 2, title: "Advanced JavaScript Concepts", instructor: "Jane Smith", students: 120, rating: 4.7, status: "Active" },
-    { id: 3, title: "Python for Data Science", instructor: "Bob Johnson", students: 200, rating: 4.9, status: "Active" },
-    { id: 4, title: "UX/UI Design Fundamentals", instructor: "Alice Brown", students: 80, rating: 4.5, status: "Inactive" },
-    { id: 5, title: "Machine Learning Basics", instructor: "Charlie Wilson", students: 100, rating: 4.6, status: "Active" },
-];
-
-export default function page() {
-    const [courses, setCourses] = useState<Course[]>(initialCourses);
+export default function Page() {
+    const [courses, setCourses] = useState<Course[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [editingCourse, setEditingCourse] = useState<EditCourse | null>(null);
-    const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
-    const [isViewDialogOpen, setIsViewDialogOpen] = useState<boolean>(false);
-    const [viewingCourse, setViewingCourse] = useState<Course | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const filteredCourses = courses.filter(course =>
-        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.instructor.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BASEURL}/courses`);
+                if (Array.isArray(response.data.data)) {
+                    setCourses(response.data.data);
+                } else {
+                    console.error('Unexpected data format:', response.data);
+                    setError('Failed to fetch courses. Please try again later.');
+                }
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+                setError('Failed to fetch courses. Please try again later.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleEdit = (course: Course) => {
-        setEditingCourse({ ...course });
-        setIsEditDialogOpen(true);
-    };
+        fetchCourses();
+    }, []);
+    
+    const filteredCourses = (courses || []).filter(course =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );    
 
-    const handleView = (course: Course) => {
-        setViewingCourse(course);
-        setIsViewDialogOpen(true);
-    };
-
-    const handleDelete = (id: number) => {
-        setCourses(courses.filter(course => course.id !== id));
-    };
-
-    const handleSaveEdit = (editedCourse: EditCourse) => {
-        if (editedCourse.id !== undefined) {
-            setCourses(courses.map(course => course.id === editedCourse.id ? { ...course, ...editedCourse } : course));
-            setIsEditDialogOpen(false);
+    const handleDelete = async (courseId: number) => {
+        if (confirm('Are you sure you want to delete this course?')) {
+            try {
+                await axios.delete(`${process.env.NEXT_PUBLIC_BASEURL}/courses/${courseId}`);
+                setCourses(courses.filter(course => course._id !== courseId));
+            } catch (error) {
+                console.error('Error deleting course:', error);
+                setError('Failed to delete course. Please try again later.');
+            }
         }
     };
 
     return (
-        <div className="p-0">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Course Management</CardTitle>
-                    <CardDescription>Manage your courses, edit details, and view course information.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex justify-between items-center mb-4 gap-x-3">
-                        <div className="relative w-full">
-                            <Input
-                                placeholder="Search courses..."
-                                startContent={
-                                    <Search className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
-                                  }
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                        <Button asChild>
-                            <Link href="/dashboard/courses/new"><Plus className="mr-2 h-4 w-4" /> Add New Course</Link>
-                        </Button>
-                    </div>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Title</TableHead>
-                                <TableHead>Instructor</TableHead>
-                                <TableHead>Students</TableHead>
-                                <TableHead>Rating</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredCourses.map((course) => (
-                                <TableRow key={course.id}>
-                                    <TableCell>{course.title}</TableCell>
-                                    <TableCell>{course.instructor}</TableCell>
-                                    <TableCell>{course.students}</TableCell>
-                                    <TableCell>{course.rating}</TableCell>
-                                    <TableCell>{course.status}</TableCell>
-                                    <TableCell>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                                    <MoreVertical className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => handleView(course)}>
-                                                    <Eye className="mr-2 h-4 w-4" /> View
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => handleEdit(course)}>
-                                                    <Edit className="mr-2 h-4 w-4" /> Edit
-                                                </DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem onClick={() => handleDelete(course.id)} className="text-red-600">
-                                                    <Trash2 className="mr-2 h-4 w-4" /> Delete
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-            </Card>
+        <div className="p-4">
+            <header className="mb-6">
+                <h1 className="text-2xl font-bold">Course Management</h1>
+                <p className="text-gray-600">Manage your courses, edit details, and view course information.</p>
+            </header>
 
-            {/* Edit Course Dialog */}
-            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Edit Course</DialogTitle>
-                        <DialogDescription>Make changes to the course details here.</DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input
-                                id="title"
-                                label="Title"
-                                value={editingCourse?.title ?? ''}
-                                onChange={(e) => setEditingCourse((prev: any) => prev ? { ...prev, title: e.target.value } : null)}
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input
-                                id="instructor"
-                                label="Instructor"
-                                value={editingCourse?.instructor ?? ''}
-                                onChange={(e) => setEditingCourse((prev: any) => prev ? { ...prev, instructor: e.target.value } : null)}
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <label htmlFor="status" className="text-right">
-                                Status
-                            </label>
-                            <select
-                                id="status"
-                                value={editingCourse?.status ?? 'Active'}
-                                onChange={(e) => setEditingCourse((prev: any) => prev ? { ...prev, status: e.target.value as 'Active' | 'Inactive' } : null)}
-                                className="col-span-3"
-                            >
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button type="submit" onClick={() => editingCourse && handleSaveEdit(editingCourse)}>Save changes</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <div className="flex justify-between items-center mb-6 gap-x-3">
+                <div className="relative w-full">
+                    <Input
+                        placeholder="Search courses..."
+                        startContent={
+                            <Search className="text-xl text-gray-400 pointer-events-none flex-shrink-0" />
+                        }
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                <Button asChild>
+                    <Link href="/dashboard/courses/new"><Plus className="mr-2 h-4 w-4" /> Add New Course</Link>
+                </Button>
+            </div>
 
-            {/* View Course Dialog */}
-            <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
-                <DialogContent className="sm:max-w-[625px]">
-                    <DialogHeader>
-                        <DialogTitle>Course Details</DialogTitle>
-                        <DialogDescription>Comprehensive information about the course.</DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <div className="col-span-1 font-bold">Title:</div>
-                            <div className="col-span-3">{viewingCourse?.title}</div>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <div className="col-span-1 font-bold">Instructor:</div>
-                            <div className="col-span-3">{viewingCourse?.instructor}</div>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <div className="col-span-1 font-bold">Students:</div>
-                            <div className="col-span-3">{viewingCourse?.students}</div>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <div className="col-span-1 font-bold">Rating:</div>
-                            <div className="col-span-3">{viewingCourse?.rating}</div>
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <div className="col-span-1 font-bold">Status:</div>
-                            <div className="col-span-3">{viewingCourse?.status}</div>
-                        </div>
-                    </div>
-                </DialogContent>
-            </Dialog>
+            {loading ? (
+                <div className="text-center text-gray-500">Loading...</div>
+            ) : error ? (
+                <div className="text-center text-red-500">{error}</div>
+            ) : (
+                <div className="space-y-4">
+                    {filteredCourses.length > 0 ? (
+                        filteredCourses.map(course => (
+                            <div key={course._id} className="p-4 border rounded-lg shadow-sm">
+                                <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
+                                <p className="text-gray-700 mb-4">{course.description}</p>
+                                <div className="flex gap-x-2">
+                                    <Button asChild>
+                                        <Link href={`/dashboard/courses/${course._id}`}><Eye className="mr-2 h-4 w-4" /> View</Link>
+                                    </Button>
+                                    <Button asChild>
+                                        <Link href={`/dashboard/courses/edit/${course._id}`}><Edit className="mr-2 h-4 w-4" /> Edit</Link>
+                                    </Button>
+                                    <Button variant="destructive" onClick={() => handleDelete(course._id)}>
+                                        <Trash2 className="mr-2 h-4 w-4" /> Delete
+                                    </Button>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-center text-gray-500">No courses found</div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
