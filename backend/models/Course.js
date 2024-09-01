@@ -39,16 +39,12 @@ const courseSchema = new mongoose.Schema(
     },
     schedule: [
       {
-        day: {
-          type: String,
+        startDate: {
+          type: Date,
           required: true,
         },
-        startTime: {
-          type: String,
-          required: true,
-        },
-        endTime: {
-          type: String,
+        EndDate: {
+          type: Date,
           required: true,
         },
       },
