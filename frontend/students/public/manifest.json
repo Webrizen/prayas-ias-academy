@@ -1,0 +1,14 @@
+{
+    "name": "Prayas IAS Academy",
+    "short_name": "Prayas-IAS-Academy",
+    "start_url": "https://prayasiasacademy.com/",
+    "display": "standalone",
+    "description": "Prayas IAS Academy is a leading IAS coaching institute in Patna, dedicated to providing high-quality education and guidance for UPSC aspirants. With expert faculty, comprehensive study materials, and a proven track record of success, we help students achieve their dream of becoming civil servants.",
+    "icons": [
+      {
+        "src": "https://prayasiasacademy.com/logo.png",
+        "sizes": "48x48",
+        "type": "image/webp"
+      }
+    ]
+  }
