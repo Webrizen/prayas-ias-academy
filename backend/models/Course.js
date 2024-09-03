@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require('slugify');
 
 const courseSchema = new mongoose.Schema(
   {
@@ -66,31 +67,32 @@ const courseSchema = new mongoose.Schema(
       },
     },
     discounts: {
-      type: Number, // Percentage discount
+      type: Number,
       default: 0,
     },
-    demoVideos: [
-      {
-        type: String, // URL to demo video
-      },
-    ],
     perks: [
       {
         type: String,
-      },
-    ],
-    videos: [
-      {
-        type: String, // URL to course video
       },
     ],
     liveClasses: {
       type: Boolean,
       default: false,
     },
+    slug: {
+        type: String,
+        required: true,
+        unique: true,
+    }
   },
   { timestamps: true }
 );
 
-const Course = mongoose.model("Course", courseSchema);
-module.exports = Course;
+courseSchema.pre('save', function(next) {
+  if (this.isModified('title')) {
+      this.slug = slugify(this.title, { lower: true, strict: true });
+  }
+  next();
+});
+
+module.exports = mongoose.model('Course', courseSchema);
