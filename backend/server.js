@@ -11,6 +11,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
+const bannerRoutes = require('./routes/bannerRoutes');
 const cors = require("cors");
 const path = require("path");
 const uploadRoute = require("./routes/imageRoutes");
@@ -51,6 +52,7 @@ app.use("/api/v1/courses", courseRoutes);
 app.use("/api/v1/testimonials", testimonialRoutes);
 app.use("/api/v1/contacts", contactRoutes);
 app.use("/api/v1/analytics", analyticsRoutes);
+app.use("/api/v1/marketing", bannerRoutes);
 
 // Image upload route
 app.use("/api/v1/upload", uploadRoute);
