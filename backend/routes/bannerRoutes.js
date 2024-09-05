@@ -39,10 +39,7 @@ router.post('/upload-banner', upload.single('bannerImage'), async (req, res) => 
 router.get('/active-banners', async (req, res) => {
     try {
         const now = new Date();
-        const banners = await Banner.find({
-            startTime: { $lte: now },
-            endTime: { $gte: now }
-        });
+        const banners = await Banner.find();
 
         res.status(200).json(banners);
     } catch (error) {
