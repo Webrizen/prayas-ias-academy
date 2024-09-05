@@ -27,3 +27,55 @@
     --radius: 0.5rem;
   }
 }
+
+@-webkit-keyframes animate-svg-stroke-1 {
+  0% {
+    stroke-dashoffset: 70.9945068359375px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+
+  100% {
+    stroke-dashoffset: 141.989013671875px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+}
+
+@keyframes animate-svg-stroke-1 {
+  0% {
+    stroke-dashoffset: 70.9945068359375px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+
+  100% {
+    stroke-dashoffset: 141.989013671875px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+}
+
+.svg-elem-1 {
+  -webkit-animation: animate-svg-stroke-1 1s cubic-bezier(1, 0, 0, 1) 0s infinite;
+  animation: animate-svg-stroke-1 1s cubic-bezier(1, 0, 0, 1) 0s infinite;
+}
+
+/* Add the keyframe definition to repeat every 10 seconds */
+@keyframes animate-svg-stroke-1 {
+  0% {
+    stroke-dashoffset: 70.9945068359375px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+
+  50% {
+    stroke-dashoffset: 141.989013671875px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+
+  100% {
+    stroke-dashoffset: 70.9945068359375px;
+    stroke-dasharray: 70.9945068359375px;
+  }
+}
+
+.svg-elem-1 {
+  -webkit-animation: animate-svg-stroke-1 10s cubic-bezier(1, 0, 0, 1) infinite;
+  animation: animate-svg-stroke-1 10s cubic-bezier(1, 0, 0, 1) infinite;
+}
