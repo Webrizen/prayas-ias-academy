@@ -3,9 +3,8 @@ import { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon, Upload, X, Pencil, Trash2 } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -45,6 +44,7 @@ export default function page() {
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFile(acceptedFiles[0])
+        console.log(acceptedFiles[0])
     }, [])
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -68,7 +68,7 @@ export default function page() {
         }
 
         const formData = new FormData()
-        formData.append('image', file as File)
+        formData.append('bannerImage', file as File)
         formData.append('startDate', startDate.toISOString())
         formData.append('endDate', endDate.toISOString())
 
@@ -87,8 +87,6 @@ export default function page() {
             const newBanner = await response.json()
             setBanners([...banners, newBanner])
             toast.success('Banner uploaded successfully!', { id: toastId })
-            // Reset form
-            setName('')
             setFile(null)
             setStartDate(undefined)
             setEndDate(undefined)
@@ -239,7 +237,6 @@ export default function page() {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Name</TableHead>
                                 <TableHead>Preview</TableHead>
                                 <TableHead>Start Date</TableHead>
                                 <TableHead>End Date</TableHead>
@@ -250,9 +247,8 @@ export default function page() {
                         <TableBody>
                             {banners.map((banner) => (
                                 <TableRow key={banner.id}>
-                                    <TableCell>{banner.name}</TableCell>
                                     <TableCell>
-                                        <img src={banner.url} alt={banner.name} className="max-h-16 object-contain" />
+                                        <img src={banner.url} alt="Banner Alt." className="max-h-16 object-contain" />
                                     </TableCell>
                                     <TableCell>{format(new Date(banner.startDate), 'PPP')}</TableCell>
                                     <TableCell>{format(new Date(banner.endDate), 'PPP')}</TableCell>
