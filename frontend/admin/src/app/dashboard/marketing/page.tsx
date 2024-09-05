@@ -11,13 +11,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/navigation';
 
 type Banner = {
-    id: string
-    url: string
-    startDate: Date
-    endDate: Date
-    active: boolean
+    _id: string
+    imageUrl: string
+    startTime: Date
+    endTime: Date
 }
 
 export default function page() {
@@ -26,21 +26,7 @@ export default function page() {
     const [startDate, setStartDate] = useState<Date>();
     const [endDate, setEndDate] = useState<Date>();
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        const fetchBanners = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/marketing/active-banners`)
-                const data = await response.json()
-                setBanners(data)
-            } catch (error) {
-                toast.error('Error fetching banners')
-                console.error('Error fetching banners:', error)
-            }
-        }
-
-        fetchBanners()
-    }, [])
+    const router = useRouter();
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFile(acceptedFiles[0])
@@ -56,7 +42,7 @@ export default function page() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         event.preventDefault()
-        if ( !file || !startDate || !endDate) {
+        if (!file || !startDate || !endDate) {
             toast.error('Please fill in all fields')
             setLoading(false)
             return
@@ -69,8 +55,8 @@ export default function page() {
 
         const formData = new FormData()
         formData.append('bannerImage', file as File)
-        formData.append('startDate', startDate.toISOString())
-        formData.append('endDate', endDate.toISOString())
+        formData.append('startTime', startDate.toISOString())
+        formData.append('endTime', endDate.toISOString())
 
         const toastId = toast.loading('Uploading banner...')
 
@@ -83,13 +69,11 @@ export default function page() {
             if (!response.ok) {
                 throw new Error('Failed to upload banner')
             }
-
-            const newBanner = await response.json()
-            setBanners([...banners, newBanner])
-            toast.success('Banner uploaded successfully!', { id: toastId })
+            toast.success(`Banner uploaded successfully!`, { id: toastId })
             setFile(null)
             setStartDate(undefined)
             setEndDate(undefined)
+            router.refresh();
         } catch (error: any) {
             toast.error(error.message || 'An error occurred while uploading the banner', { id: toastId })
         } finally {
@@ -108,9 +92,8 @@ export default function page() {
             if (!response.ok) {
                 throw new Error('Failed to delete banner')
             }
-
-            setBanners(banners.filter(banner => banner.id !== id))
             toast.success('Banner deleted successfully!', { id: toastId })
+            router.refresh();
         } catch (error: any) {
             toast.error('Error deleting banner: ' + error.message, { id: toastId })
         } finally {
@@ -118,11 +101,20 @@ export default function page() {
         }
     }
 
-    const handleToggleActive = (id: string) => {
-        setBanners(banners.map(banner =>
-            banner.id === id ? { ...banner, active: !banner.active } : banner
-        ))
-    }
+    useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/marketing/active-banners`)
+                const data = await response.json()
+                setBanners(data)
+            } catch (error) {
+                toast.error('Error fetching banners')
+                console.error('Error fetching banners:', error)
+            }
+        }
+
+        fetchBanners()
+    }, [])
 
     return (
         <div className="container mx-auto p-4">
@@ -246,24 +238,20 @@ export default function page() {
                         </TableHeader>
                         <TableBody>
                             {banners.map((banner) => (
-                                <TableRow key={banner.id}>
+                                <TableRow key={banner._id}>
                                     <TableCell>
-                                        <img src={banner.url} alt="Banner Alt." className="max-h-16 object-contain" />
+                                        <img src={banner.imageUrl} alt="Banner Alt." className="h-20 w-20 rounded-sm object-cover" />
                                     </TableCell>
-                                    <TableCell>{format(new Date(banner.startDate), 'PPP')}</TableCell>
-                                    <TableCell>{format(new Date(banner.endDate), 'PPP')}</TableCell>
+                                    <TableCell>{format(new Date(banner.startTime), 'PPP')}</TableCell>
+                                    <TableCell>{format(new Date(banner.endTime), 'PPP')}</TableCell>
                                     <TableCell>
-                                        <Button
-                                            variant={banner.active ? "ghost" : "secondary"}
-                                            onClick={() => handleToggleActive(banner.id)}
-                                            disabled={loading}
-                                        >
-                                            {banner.active ? "Active" : "Inactive"}
+                                        <Button variant={new Date() >= new Date(banner.startTime) && new Date() <= new Date(banner.endTime) ? "ghost" : "secondary"} disabled={loading}>
+                                            {new Date() >= new Date(banner.startTime) && new Date() <= new Date(banner.endTime) ? "Active" : "Inactive"}
                                         </Button>
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex space-x-2">
-                                            <Button variant="ghost" size="icon" onClick={() => handleDelete(banner.id)} disabled={loading}>
+                                            <Button variant="ghost" size="icon" onClick={() => handleDelete(banner._id)} disabled={loading}>
                                                 <Trash2 className="h-4 w-4 text-destructive" />
                                             </Button>
                                             <Button variant="ghost" size="icon" disabled={loading}>
