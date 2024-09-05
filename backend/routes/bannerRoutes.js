@@ -27,6 +27,7 @@ router.post('/upload-banner', upload.single('bannerImage'), async (req, res) => 
         });
 
         await banner.save();
+        console.log(req.file);
         res.status(201).json({ message: 'Banner uploaded successfully!', banner });
     } catch (error) {
         console.error('Error uploading banner:', error);
