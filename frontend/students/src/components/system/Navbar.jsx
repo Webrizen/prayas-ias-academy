@@ -48,7 +48,7 @@ export default function Navbar() {
         <div className="container mx-auto flex flex-row flex-wrap p-3 justify-between items-center">
           <Link
             href="/"
-            className="h-10 w-auto flex gap-2 justify-start mr-8 items-center p-1 rounded-md hover:bg-[rgba(225,225,225,0.05)]"
+            className="h-10 w-auto flex gap-2 justify-start md:mr-8 items-center p-1 rounded-md hover:bg-[rgba(225,225,225,0.05)]"
           >
             <Image
               src={Logo}
@@ -279,22 +279,6 @@ export default function Navbar() {
             <AnimatedLink title="Contact" link="/contact" />
           </nav>
           <div className="flex justify-end items-center gap-1">
-            <button className="inline-flex w-[38px] h-[38px] justify-center border dark:border-slate-900 items-center dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                />
-              </svg>
-            </button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="rounded-full">
