@@ -185,7 +185,7 @@ export default function Home() {
             BPSC exams.
           </p>
         </div>
-        <BentoGrid className="container mx-auto md:auto-rows-[20rem]">
+        <BentoGrid className="container mx-auto md:auto-rows-[20rem] md:p-0 p-4">
           {items.map((item, i) => (
             <BentoGridItem
               key={i}

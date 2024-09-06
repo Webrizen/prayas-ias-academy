@@ -56,7 +56,7 @@ export const SwipeCarousel = () => {
   };
 
   return (
-    <div className="relative overflow-hidden dark:bg-neutral-950 py-8 h-[90vh]">
+    <div className="relative overflow-hidden dark:bg-neutral-950 py-8 md:h-[90vh] h-[40vh]">
       <motion.div
         drag="x"
         dragConstraints={{
