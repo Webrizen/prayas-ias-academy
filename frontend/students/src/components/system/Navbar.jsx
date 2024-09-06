@@ -38,7 +38,7 @@ import Logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
   return (
     <>
       <header
@@ -58,7 +58,7 @@ export default function Navbar() {
               height={500}
               className="h-full w-auto"
             />
-            <span>Prayas IAS Academy</span>
+            <span className="md:block hidden text-sm">Prayas IAS Academy</span>
           </Link>
           <nav
             className={`lg:flex lg:flex-row flex-col justify-center md:relative absolute md:w-auto w-full left-0 right-0 md:top-auto top-16 z-50 text-sm items-center ${
@@ -279,7 +279,7 @@ export default function Navbar() {
             <AnimatedLink title="Contact" link="/contact" />
           </nav>
           <div className="flex justify-end items-center gap-1">
-            <button className="inline-flex w-[38px] h-[38px] justify-center border border-slate-900 items-center bg-slate-950 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded-full">
+            <button className="inline-flex w-[38px] h-[38px] justify-center border dark:border-slate-900 items-center dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -321,6 +321,36 @@ export default function Navbar() {
                 <DropdownMenuItem>+91 8818810184</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="cursor-pointer">
+                <Button variant="outline" size="icon" className="rounded-full">
+                  <Sun
+                    className={`h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all ${
+                      theme === "dark" ? "dark:-rotate-90 dark:scale-0" : ""
+                    }`}
+                  />
+                  <Moon
+                    className={`absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all ${
+                      theme === "dark" ? "dark:rotate-0 dark:scale-100" : ""
+                    }`}
+                  />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
             <Button className="relative inline-flex overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
               <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
