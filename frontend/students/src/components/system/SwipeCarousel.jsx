@@ -56,7 +56,7 @@ export const SwipeCarousel = () => {
   };
 
   return (
-    <div className="relative overflow-hidden bg-neutral-950 py-8 h-[90vh]">
+    <div className="relative overflow-hidden dark:bg-neutral-950 py-8 h-[90vh]">
       <motion.div
         drag="x"
         dragConstraints={{
@@ -96,7 +96,7 @@ const Images = ({ imgIndex }) => {
               scale: imgIndex === idx ? 0.95 : 0.85,
             }}
             transition={SPRING_OPTIONS}
-            className="aspect-video w-full h-full shrink-0 rounded-xl bg-neutral-800 object-cover"
+            className="aspect-video w-full h-full shrink-0 rounded-xl dark:bg-neutral-800 object-cover"
           />
         );
       })}
@@ -125,8 +125,8 @@ const Dots = ({ imgIndex, setImgIndex }) => {
 const GradientEdges = () => {
   return (
     <>
-      <div className="pointer-events-none absolute bottom-0 left-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-r from-neutral-950/50 to-neutral-950/0" />
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-l from-neutral-950/50 to-neutral-950/0" />
+      <div className="pointer-events-none absolute bottom-0 left-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-r dark:from-neutral-950/50 to-neutral-950/0" />
+      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-l dark:from-neutral-950/50 to-neutral-950/0" />
     </>
   );
 };

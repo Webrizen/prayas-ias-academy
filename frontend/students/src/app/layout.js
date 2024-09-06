@@ -2,6 +2,7 @@ import { Poppins, Unbounded } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Navbar from "@/components/system/Navbar";
+import SmoothScroll from "@/components/helpers/SmoothScroll";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -104,8 +105,10 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-        <Navbar />
-          {children}
+          <SmoothScroll>
+            <Navbar />
+            {children}
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

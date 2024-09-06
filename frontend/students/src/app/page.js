@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Unbounded } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import {
   IconClipboardCopy,
@@ -9,10 +8,12 @@ import {
   IconSignature,
   IconTableColumn,
 } from "@tabler/icons-react";
-import { motion } from "framer-motion";
-import Image from "next/image";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { SwipeCarousel } from "@/components/system/SwipeCarousel";
+import { MaskContainer } from "@/components/ui/svg-mask-effect";
+import { cn } from "@/lib/utils";
+import Marquee from "@/components/magicui/marquee";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -140,12 +141,42 @@ export default function Home() {
         </div>
       </section>
       <section className="min-h-max flex justify-center items-start">
-        <div className="container mx-auto"><SwipeCarousel /></div>
+        <div className="container mx-auto">
+          <SwipeCarousel />
+        </div>
+      </section>
+      <section className="min-h-max relative bg-black">
+        <div className="px-8 pb-0 pt-16">
+          <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+            Student's Testimonials
+          </h4>
+
+          <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
+          Hear from our dedicated students about their transformative experiences. Each journey is unique, but the results speak for themselves: increased confidence, personalized mentorship, and a roadmap to success.
+          </p>
+          <div className="flex flex-row items-center justify-center mb-10 w-full">
+            <AnimatedTooltip items={people} />
+          </div>
+        </div>
+        <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border-none bg-none">
+          <Marquee pauseOnHover className="[--duration:20s]">
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:20s]">
+            {secondRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-black"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-black"></div>
+        </div>
       </section>
       <section className="min-h-max relative py-10 lg:py-20">
         <div className="px-8 mb-16">
           <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
-            Elevate Your UPSC Journey with <br/> Unmatched Resources
+            Elevate Your UPSC Journey with <br /> Unmatched Resources
           </h4>
 
           <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
@@ -167,6 +198,20 @@ export default function Home() {
           ))}
         </BentoGrid>
       </section>
+      <section className="h-[40rem] w-full flex items-center justify-center overflow-hidden px-20">
+        <MaskContainer
+          revealText={
+            <p className="container mx-auto dark:text-slate-500 text-slate-900 text-center text-4xl font-bold !border-none">
+              "Unlock your true potential with guidance tailored for UPSC
+              success. Dare to dream, and let us help you make it a reality!"
+            </p>
+          }
+          className="h-[40rem] border rounded-md"
+        >
+          "Your journey to becoming a civil servant starts here. Step into the
+          future of focused, personalized UPSC preparation."
+        </MaskContainer>
+      </section>
     </>
   );
 }
@@ -182,7 +227,9 @@ const items = [
     title: "Tailored Study Plans",
     description:
       "Receive personalized strategies to tackle the syllabus efficiently, tailored to your strengths and weaknesses.",
-    header: <Skeleton gradient="bg-gradient-to-tl from-orange-700 via-orange-500 to-orange-300" />,
+    header: (
+      <Skeleton gradient="bg-gradient-to-tl from-orange-700 via-orange-500 to-orange-300" />
+    ),
     className: "md:col-span-2",
     icon: <IconClipboardCopy className="h-16 w-16 text-neutral-500" />,
   },
@@ -190,7 +237,9 @@ const items = [
     title: "Mock Tests & Detailed Analysis",
     description:
       "Participate in simulated exams that mirror the real UPSC experience and receive in-depth feedback.",
-    header: <Skeleton gradient="bg-gradient-to-tr from-emerald-500 via-cyan-700 to-blue-500" />,
+    header: (
+      <Skeleton gradient="bg-gradient-to-tr from-emerald-500 via-cyan-700 to-blue-500" />
+    ),
     className: "md:col-span-1",
     icon: <IconFileBroken className="h-16 w-16 text-neutral-500" />,
   },
@@ -198,7 +247,9 @@ const items = [
     title: "Expert Faculty Support",
     description:
       "Learn from experienced educators with years of expertise in civil service exam coaching.",
-    header: <Skeleton gradient="bg-gradient-to-t from-teal-400 via-emerald-500 to-green-600" />,
+    header: (
+      <Skeleton gradient="bg-gradient-to-t from-teal-400 via-emerald-500 to-green-600" />
+    ),
     className: "md:col-span-1",
     icon: <IconSignature className="h-16 w-16 text-neutral-500" />,
   },
@@ -206,8 +257,122 @@ const items = [
     title: "Comprehensive Resource Library",
     description:
       "Access an extensive range of study materials, video lectures, and notes curated for comprehensive learning.",
-    header: <Skeleton gradient="bg-gradient-to-tr from-indigo-700 via-blue-800 to-cyan-900" />,
+    header: (
+      <Skeleton gradient="bg-gradient-to-tr from-indigo-700 via-blue-800 to-cyan-900" />
+    ),
     className: "md:col-span-2",
     icon: <IconTableColumn className="h-16 w-16 text-neutral-500" />,
   },
 ];
+
+const reviews = [
+  {
+    name: "Ananya Sharma",
+    username: "@ananya_civil_aspirant",
+    body: "The personalized approach and focused study materials have completely transformed my preparation strategy. I finally feel confident about my UPSC journey!",
+    img: "https://avatar.vercel.sh/ananya",
+  },
+  {
+    name: "Rohit Kumar",
+    username: "@rohit_ias_hustle",
+    body: "This coaching truly goes above and beyond. The mentorship I received was exactly what I needed to stay motivated and on track. Highly recommend it!",
+    img: "https://avatar.vercel.sh/rohit",
+  },
+  {
+    name: "Priya Singh",
+    username: "@priya_prepares",
+    body: "The resources and guidance are unmatched. I owe so much of my progress to the faculty here who genuinely care about each student's success.",
+    img: "https://avatar.vercel.sh/priya",
+  },
+  {
+    name: "Amit Verma",
+    username: "@amit_ias_dream",
+    body: "What sets this place apart is the level of detail in their materials and the one-on-one sessions. It's like having a personal roadmap to success!",
+    img: "https://avatar.vercel.sh/amit",
+  },
+  {
+    name: "Simran Kaur",
+    username: "@simran_scholar",
+    body: "From daily quizzes to mock tests, the rigorous practice sessions have sharpened my skills beyond what I imagined. I feel ready for the challenge!",
+    img: "https://avatar.vercel.sh/simran",
+  },
+  {
+    name: "Aditya Patel",
+    username: "@aditya_upsc_grind",
+    body: "The dedication of the faculty is incredible. They don't just teach—they mentor, inspire, and push you to go beyond your limits.",
+    img: "https://avatar.vercel.sh/aditya",
+  },
+];
+
+const people = [
+  {
+    id: 1,
+    name: "Ashok Kumar",
+    designation: "IAS Officer - District Magistrate",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+  },
+  {
+    id: 2,
+    name: "Neha Sharma",
+    designation: "IPS Officer - Superintendent of Police",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 3,
+    name: "Rajesh Singh",
+    designation: "IRS Officer - Commissioner of Income Tax",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 4,
+    name: "Anjali Verma",
+    designation: "IFS Officer - Ambassador",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 5,
+    name: "Arun Patel",
+    designation: "IAS Officer - Chief Secretary",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+  },
+  {
+    id: 6,
+    name: "Pooja Rao",
+    designation: "IRS Officer - Deputy Commissioner",
+    image:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+  },
+];
+
+const firstRow = reviews.slice(0, reviews.length / 2);
+const secondRow = reviews.slice(reviews.length / 2);
+
+const ReviewCard = ({ img, name, username, body }) => {
+  return (
+    <figure
+      className={cn(
+        "relative w-[400px] cursor-pointer overflow-hidden rounded-xl border p-4",
+        // light styles
+        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        // dark styles
+        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
+      )}
+    >
+      <div className="flex flex-row items-center gap-2">
+        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <div className="flex flex-col">
+          <figcaption className="text-sm font-medium dark:text-white">
+            {name}
+          </figcaption>
+          <p className="text-xs font-medium dark:text-white/40">{username}</p>
+        </div>
+      </div>
+      <blockquote className="mt-2 text-sm">{body}</blockquote>
+    </figure>
+  );
+};
