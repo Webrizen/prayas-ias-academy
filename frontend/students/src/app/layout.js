@@ -2,6 +2,7 @@ import { Poppins, Unbounded } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/system/Navbar";
 import SmoothScroll from "@/components/helpers/SmoothScroll";
+import Footer from "@/components/system/Footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -101,6 +102,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll>
           <Navbar />
           {children}
+          <Footer />
         </SmoothScroll>
       </body>
     </html>
