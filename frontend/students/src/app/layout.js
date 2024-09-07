@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/system/Navbar";
 import SmoothScroll from "@/components/helpers/SmoothScroll";
 import Footer from "@/components/system/Footer";
+import { NextUIProvider } from "@nextui-org/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -99,11 +100,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <SmoothScroll>
-          <Navbar />
-          {children}
-          <Footer />
-        </SmoothScroll>
+        <NextUIProvider>
+          <SmoothScroll>
+            <Navbar />
+            {children}
+            <Footer />
+          </SmoothScroll>
+        </NextUIProvider>
       </body>
     </html>
   );

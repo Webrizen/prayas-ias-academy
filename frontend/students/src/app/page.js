@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import { Button } from "@/components/ui/button";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import Contact from "@/components/system/Contact";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -289,6 +290,7 @@ export default function Home() {
           future of focused, personalized UPSC preparation."
         </MaskContainer>
       </section>
+      <Contact />
     </>
   );
 }
