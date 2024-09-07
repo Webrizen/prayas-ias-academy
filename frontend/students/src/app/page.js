@@ -210,13 +210,14 @@ export default function Home() {
             </Card>
           </CardSpotlight>
         </div>
-
+        <div className="container mx-auto overflow-hidden">
         <Marquee pauseOnHover className="[--duration:20s] mx-auto">
           <Badge>Delhi Centre</Badge>
           <Badge>Jaipur Centre</Badge>
           <Badge>Prayagraj Centre</Badge>
           <Badge>Bhopal Centre</Badge>
         </Marquee>
+        </div>
       </section>
       <section className="min-h-max relative">
         <div className="px-8 pb-0 pt-16">
