@@ -10,35 +10,24 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
-import { Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
 import AnimatedLink from "@/components/helpers/AnimatedLink";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { setTheme, theme } = useTheme();
   return (
     <>
       <header
@@ -306,38 +295,38 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer">
-                <Button variant="outline" size="icon" className="rounded-full">
-                  <Sun
-                    className={`h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all ${
-                      theme === "dark" ? "dark:-rotate-90 dark:scale-0" : ""
-                    }`}
-                  />
-                  <Moon
-                    className={`absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all ${
-                      theme === "dark" ? "dark:rotate-0 dark:scale-100" : ""
-                    }`}
-                  />
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="cursor-pointer">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802"
+                      />
+                    </svg>
+                  </Button>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>Hindi</DropdownMenuItem>
+                <DropdownMenuItem>English</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button className="relative inline-flex overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-white px-3 py-1 text-sm font-medium text-slate-950 backdrop-blur-3xl">
                 Download App
               </span>
             </Button>

@@ -1,6 +1,5 @@
 import { Poppins, Unbounded } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import Navbar from "@/components/system/Navbar";
 import SmoothScroll from "@/components/helpers/SmoothScroll";
 
@@ -99,17 +98,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SmoothScroll>
-            <Navbar />
-            {children}
-          </SmoothScroll>
-        </ThemeProvider>
+        <SmoothScroll>
+          <Navbar />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

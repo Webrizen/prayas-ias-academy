@@ -13,7 +13,18 @@ import { SwipeCarousel } from "@/components/system/SwipeCarousel";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
+import { Button } from "@/components/ui/button";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -26,7 +37,7 @@ export default function Home() {
     <>
       <section className="min-h-max relative">
         <RetroGrid />
-        <div className="relative mx-auto pt-32 pb-24 lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 text-center space-y-8">
+        <div className="relative mx-auto pt-20 pb-0 lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 text-center space-y-8">
           <h1
             className={`text-gray-900 dark:text-white mx-auto max-w-5xl font-bold text-4xl/tight sm:text-5xl/tight lg:text-6xl/tight xl:text-7xl/tight ${unbounded.className}`}
           >
@@ -140,19 +151,84 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="min-h-max flex justify-center items-start">
+      <section className="min-h-max flex flex-col justify-center items-start">
         <div className="container mx-auto">
           <SwipeCarousel />
         </div>
+        <div className="container mx-auto grid md:grid-cols-2 grid-cols-1 gap-3 md:px-10 px-2">
+          <CardSpotlight className="h-max w-full">
+            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
+              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
+                English
+              </Badge>
+              <CardHeader>
+                <CardTitle className="text-center">
+                  Prayas IAS Academy
+                </CardTitle>
+                <CardDescription className="text-center">
+                  Big Learnings Made Easy
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-2 text-center">
+                <Button>General Studies</Button>
+                <Button>Optional</Button>
+                <Button>AIM</Button>
+                <Button>Test Series</Button>
+                <Button>CSAT Course</Button>
+                <Button>Current Affairs</Button>
+              </CardContent>
+              <CardFooter className="flex justify-center items-center">
+                <Button variant="secondary">Explore English Courses</Button>
+              </CardFooter>
+            </Card>
+          </CardSpotlight>
+
+          <CardSpotlight className="h-max w-full">
+            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
+              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
+                हिंदी
+              </Badge>
+              <CardHeader>
+                <CardTitle className="text-center">
+                  Prayas IAS Academy
+                </CardTitle>
+                <CardDescription className="text-center">
+                  बड़ी सीखें सरल बनाएं
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-2 text-center">
+                <Button>सामान्य अध्ययन</Button>
+                <Button>वैकल्पिक</Button>
+                <Button>AIM (हिंदी)</Button>
+                <Button>टेस्ट सीरीज</Button>
+                <Button>CSAT कोर्स</Button>
+                <Button>करेंट अफेयर्स</Button>
+              </CardContent>
+              <CardFooter className="flex justify-center items-center">
+                <Button variant="secondary">हिंदी कोर्सेज देखें</Button>
+              </CardFooter>
+            </Card>
+          </CardSpotlight>
+        </div>
+
+        <Marquee pauseOnHover className="[--duration:20s] mx-auto">
+          <Badge>Delhi Centre</Badge>
+          <Badge>Jaipur Centre</Badge>
+          <Badge>Prayagraj Centre</Badge>
+          <Badge>Bhopal Centre</Badge>
+        </Marquee>
       </section>
-      <section className="min-h-max relative bg-black">
+      <section className="min-h-max relative">
         <div className="px-8 pb-0 pt-16">
           <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
             Student's Testimonials
           </h4>
 
           <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          Hear from our dedicated students about their transformative experiences. Each journey is unique, but the results speak for themselves: increased confidence, personalized mentorship, and a roadmap to success.
+            Hear from our dedicated students about their transformative
+            experiences. Each journey is unique, but the results speak for
+            themselves: increased confidence, personalized mentorship, and a
+            roadmap to success.
           </p>
           <div className="flex flex-row items-center justify-center mb-10 w-full">
             <AnimatedTooltip items={people} />
@@ -230,7 +306,7 @@ const items = [
     header: (
       <Skeleton gradient="bg-gradient-to-tl from-orange-700 via-orange-500 to-orange-300" />
     ),
-    className: "md:col-span-2",
+    className: "md:col-span-2 border border-slate-200",
     icon: <IconClipboardCopy className="h-16 w-16 text-neutral-500" />,
   },
   {
@@ -240,7 +316,7 @@ const items = [
     header: (
       <Skeleton gradient="bg-gradient-to-tr from-emerald-500 via-cyan-700 to-blue-500" />
     ),
-    className: "md:col-span-1",
+    className: "md:col-span-1 border border-slate-200",
     icon: <IconFileBroken className="h-16 w-16 text-neutral-500" />,
   },
   {
@@ -250,7 +326,7 @@ const items = [
     header: (
       <Skeleton gradient="bg-gradient-to-t from-teal-400 via-emerald-500 to-green-600" />
     ),
-    className: "md:col-span-1",
+    className: "md:col-span-1 border border-slate-200",
     icon: <IconSignature className="h-16 w-16 text-neutral-500" />,
   },
   {
@@ -260,7 +336,7 @@ const items = [
     header: (
       <Skeleton gradient="bg-gradient-to-tr from-indigo-700 via-blue-800 to-cyan-900" />
     ),
-    className: "md:col-span-2",
+    className: "md:col-span-2 border border-slate-200",
     icon: <IconTableColumn className="h-16 w-16 text-neutral-500" />,
   },
 ];
