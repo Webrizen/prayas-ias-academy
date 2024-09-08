@@ -216,7 +216,7 @@ export default function CreateCoursePage() {
       schedule: [
         {
           startDate: formattedSchedule,
-          EndDate: formattedScheduleEnd,
+          endDate: formattedScheduleEnd,
         },
       ],
       keyFeatures,
