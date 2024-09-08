@@ -44,7 +44,7 @@ const courseSchema = new mongoose.Schema(
           type: Date,
           required: true,
         },
-        EndDate: {
+        endDate: {
           type: Date,
           required: true,
         },
@@ -80,17 +80,26 @@ const courseSchema = new mongoose.Schema(
       default: false,
     },
     slug: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     }
   },
   { timestamps: true }
 );
 
+// Set the slug before validation
+courseSchema.pre('validate', function(next) {
+  if (!this.slug && this.title) {
+    this.slug = slugify(this.title, { lower: true, strict: true });
+  }
+  next();
+});
+
+// You can still use the pre-save hook for any additional logic, but slug creation should happen in pre-validate
 courseSchema.pre('save', function(next) {
   if (this.isModified('title')) {
-      this.slug = slugify(this.title, { lower: true, strict: true });
+    this.slug = slugify(this.title, { lower: true, strict: true });
   }
   next();
 });
