@@ -61,7 +61,7 @@ export default function Navbar() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="lg:inline-flex !bg-transparent dark:!bg-transparent !px-3 !py-0 rounded-full text-slate-700 dark:text-slate-300 dark:hover:text-blue-300 items-center hover:text-blue-500 justify-center hover:bg-slate-100 dark:hover:!bg-[rgba(225,225,225,0.1)]">
-                    Courses
+                    <Link href="/courses">Courses</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
                     <Link href="/courses/ias-prelims" legacyBehavior passHref>
