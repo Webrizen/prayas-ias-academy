@@ -8,6 +8,7 @@ import {
   IconSignature,
   IconTableColumn,
 } from "@tabler/icons-react";
+import { ArrowRight, BookOpen, Scale } from "lucide-react";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { SwipeCarousel } from "@/components/system/SwipeCarousel";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
@@ -36,6 +37,46 @@ const unbounded = Unbounded({
 export default function Home() {
   return (
     <>
+      <section className="w-full min-h-screen bg-gray-50 bg-[url('/hero-bg.svg')] bg-center bg-cover flex items-center justify-center p-4">
+        <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="flex flex-col md:flex-row">
+            {/* UPSC Side */}
+            <div className="w-full md:w-1/2 p-8 md:p-12 hover:bg-gray-100 transition-colors duration-300">
+              <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
+                <Scale className="w-8 h-8 text-blue-600" />
+              </div>
+              <h2 className="text-3xl font-bold mb-4 text-gray-800">UPSC</h2>
+              <p className="text-gray-600 mb-6">
+                Prepare for the Union Public Service Commission exams. Your
+                gateway to central government services.
+              </p>
+              <button className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
+                Explore UPSC
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div className="hidden md:block w-px bg-gray-200 mx-4"></div>
+
+            {/* BPSC Side */}
+            <div className="w-full md:w-1/2 p-8 md:p-12 hover:bg-gray-100 transition-colors duration-300">
+              <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+                <BookOpen className="w-8 h-8 text-green-600" />
+              </div>
+              <h2 className="text-3xl font-bold mb-4 text-gray-800">BPSC</h2>
+              <p className="text-gray-600 mb-6">
+                Prepare for the Bihar Public Service Commission exams. Your path
+                to state government opportunities.
+              </p>
+              <button className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-300">
+                Explore BPSC
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="min-h-max relative">
         <RetroGrid />
         <div className="relative mx-auto pt-20 pb-0 lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 text-center space-y-8">
@@ -212,12 +253,12 @@ export default function Home() {
           </CardSpotlight>
         </div>
         <div className="container mx-auto overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:20s] mx-auto">
-          <Badge>Delhi Centre</Badge>
-          <Badge>Jaipur Centre</Badge>
-          <Badge>Prayagraj Centre</Badge>
-          <Badge>Bhopal Centre</Badge>
-        </Marquee>
+          <Marquee pauseOnHover className="[--duration:20s] mx-auto">
+            <Badge>Delhi Centre</Badge>
+            <Badge>Jaipur Centre</Badge>
+            <Badge>Prayagraj Centre</Badge>
+            <Badge>Bhopal Centre</Badge>
+          </Marquee>
         </div>
       </section>
       <section className="min-h-max relative">

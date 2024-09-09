@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,9 +25,24 @@ import {
 import AnimatedLink from "@/components/helpers/AnimatedLink";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
+import { fetchCourseTitlesAndSlugs } from "@/utils/fetchCourses";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [courses, setCourses] = useState([]);
+
+  const loadCourses = useCallback(async () => {
+    try {
+      const courseData = await fetchCourseTitlesAndSlugs();
+      setCourses(courseData);
+    } catch (error) {
+      console.error("Failed to fetch course data:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadCourses();
+  }, [loadCourses]);
   return (
     <>
       <header
@@ -64,93 +79,18 @@ export default function Navbar() {
                     <Link href="/courses">Courses</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
-                    <Link href="/courses/ias-prelims" legacyBehavior passHref>
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        IAS Prelims Intensive Course
-                      </NavigationMenuLink>
-                    </Link>
-                    <Link href="/courses/ias-mains" legacyBehavior passHref>
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        IAS Mains Advanced Course
-                      </NavigationMenuLink>
-                    </Link>
-                    <Link href="/courses/ias-interview" legacyBehavior passHref>
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        IAS Interview Preparation Course
-                      </NavigationMenuLink>
-                    </Link>
-                    <Accordion type="single" collapsible>
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                          Optional Subjects
-                        </AccordionTrigger>
-                        <AccordionContent className="flex flex-col w-full gap-0">
-                          <Link
-                            href="/courses/ias-geography"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Geography Optional Course
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/courses/ias-public-administration"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Public Administration Optional Course
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/courses/ias-sociology"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Sociology Optional Course
-                            </NavigationMenuLink>
-                          </Link>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                    <Accordion type="single" collapsible>
-                      <AccordionItem value="item-2">
-                        <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                          Foundation Courses
-                        </AccordionTrigger>
-                        <AccordionContent className="flex flex-col w-full gap-0">
-                          <Link
-                            href="/courses/ias-foundation"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Foundation Course
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/courses/ias-ethics"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Ethics Course
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/courses/ias-essay"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              IAS Essay Writing Course
-                            </NavigationMenuLink>
-                          </Link>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                    {courses.map((course) => (
+                      <Link
+                        key={course.slug}
+                        href={`/courses/${course.slug}`}
+                        legacyBehavior
+                        passHref
+                      >
+                        <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
+                          {course.title}
+                        </NavigationMenuLink>
+                      </Link>
+                    ))}
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>

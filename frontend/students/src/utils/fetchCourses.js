@@ -33,3 +33,26 @@ export const fetchCourseBySlug = async (slug) => {
     throw err;
   }
 };
+
+// Function to fetch all Courses with only 'title' and 'slug' fields populated
+export const fetchCourseTitlesAndSlugs = async () => {
+  try {
+    // Fetch all courses
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+
+    // Return only the titles and slugs of the courses
+    return data?.data?.map(course => ({
+      title: course.title,
+      slug: course.slug,
+    })) || [];
+  } catch (err) {
+    console.error("Error fetching course titles and slugs:", err);
+    throw err;
+  }
+};
