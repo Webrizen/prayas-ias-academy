@@ -16,3 +16,20 @@ export const fetchCourses = async () => {
     throw err;
   }
 };
+
+// Function to fetch a single course by Slug
+export const fetchCourseBySlug = async (slug) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses/slug/${slug}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch course by slug");
+    }
+
+    const data = await response.json();
+    return data?.data || null;
+  } catch (err) {
+    console.error("Error fetching course by slug:", err);
+    throw err;
+  }
+};
