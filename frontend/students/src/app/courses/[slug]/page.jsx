@@ -66,8 +66,8 @@ export default async function page({ params }) {
                 <CardDescription>Plan your learning journey</CardDescription>
               </CardHeader>
               <CardContent>
-                {course.schedule.map((scheduleItem) => (
-                  <>
+                {course.schedule.map((scheduleItem, index) => (
+                  <div key={index}>
                     <div className="flex items-center justify-between mb-4">
                       <div className="text-sm">
                         <p className="font-medium">Start Date</p>
@@ -112,15 +112,14 @@ export default async function page({ params }) {
                       <span>10 weeks</span>
                       <span>40 hours of content</span>
                     </div>
-                  </>
+                  </div>
                 ))}
               </CardContent>
             </Card>
             <h2 className="text-2xl font-semibold mb-4">Instructors</h2>
             <div className="grid gap-6 sm:grid-cols-2">
               {course.instructors.map((instructor) => (
-                <>
-                  <div
+                <div
                     key={instructor._id}
                     className="relative bg-gradient-blur rounded-lg overflow-hidden border border-slate-300 h-full"
                   >
@@ -149,7 +148,6 @@ export default async function page({ params }) {
                       </p>
                     </div>
                   </div>
-                </>
               ))}
             </div>
           </div>
