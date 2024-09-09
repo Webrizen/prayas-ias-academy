@@ -40,6 +40,24 @@ exports.getCourse = async (req, res) => {
   }
 };
 
+// Get a single course by Slug
+exports.getCourseBySlug = async (req, res) => {
+  try {
+    const course = await Course.findOne({ slug: req.params.slug })
+      .populate("category")
+      .populate("instructors")
+      .populate("tags");
+      
+    if (!course) {
+      return res.status(404).json({ success: false, error: "Course not found" });
+    }
+    res.status(200).json({ success: true, data: course });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+
 // Update a course
 exports.updateCourse = async (req, res) => {
   try {

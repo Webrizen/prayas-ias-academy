@@ -5,6 +5,7 @@ const {
   getCourse,
   updateCourse,
   deleteCourse,
+  getCourseBySlug
 } = require("../controllers/courseController");
 const { protect, teachers } = require('../middlewares/authMiddleware');
 
@@ -13,6 +14,7 @@ const router = express.Router();
 // Public routes
 router.get("/", getCourses);
 router.get("/:id", getCourse);
+router.get("/slug/:slug", getCourseBySlug);
 
 // Protected routes
 router.post("/", protect, teachers, createCourse);
