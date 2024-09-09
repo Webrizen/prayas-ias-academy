@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from '@nextui-org/react';
 import Link from 'next/link';
 import axios from 'axios';
+import { toast, Toaster } from 'react-hot-toast';
+import { useCookies } from 'next-client-cookies';
 
 interface Course {
     _id: number;
@@ -28,6 +30,8 @@ export default function Page() {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const cookies = useCookies();
+    const jwtToken = cookies.get('jwt');
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -57,17 +61,25 @@ export default function Page() {
     const handleDelete = async (courseId: number) => {
         if (confirm('Are you sure you want to delete this course?')) {
             try {
-                await axios.delete(`${process.env.NEXT_PUBLIC_BASEURL}/courses/${courseId}`);
+                await axios.delete(`${process.env.NEXT_PUBLIC_BASEURL}/courses/${courseId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${jwtToken}`
+                    }
+                });
+                toast.success("Course deleted successfully");
                 setCourses(courses.filter(course => course._id !== courseId));
             } catch (error) {
                 console.error('Error deleting course:', error);
                 setError('Failed to delete course. Please try again later.');
+                toast.error("Error deleting course");
             }
         }
     };
 
     return (
         <div className="p-4">
+            <Toaster position='bottom-center' />
             <header className="mb-6">
                 <h1 className="text-2xl font-bold">Course Management</h1>
                 <p className="text-gray-600">Manage your courses, edit details, and view course information.</p>
