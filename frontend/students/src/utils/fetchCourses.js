@@ -3,7 +3,7 @@
 // Function to fetch all Blogs with only required fields populated
 export const fetchCourses = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`, { cache: 'no-store' });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
