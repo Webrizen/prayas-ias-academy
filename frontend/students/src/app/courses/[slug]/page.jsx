@@ -117,7 +117,7 @@ export default async function page({ params }) {
               </CardContent>
             </Card>
             <h2 className="text-2xl font-semibold mb-4">Instructors</h2>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-3">
               {course.instructors.map((instructor) => (
                 <div
                     key={instructor._id}
@@ -127,7 +127,7 @@ export default async function page({ params }) {
                     <div className="absolute top-[35%] right-auto left-16 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                       <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white">
                         <img
-                          className="w-full h-full object-cover object-center"
+                          className="w-full h-full object-cover object-center bg-black"
                           src={
                             instructor.profilePicture ||
                             "https://placehold.co/500x500"
@@ -159,7 +159,7 @@ export default async function page({ params }) {
                   alt="Course Thumbnail"
                   width={400}
                   height={200}
-                  className="rounded-lg object-cover mb-4 aspect-video"
+                  className="rounded-lg object-cover mb-4 aspect-video bg-black"
                 />
                 <CardTitle>Course Fee</CardTitle>
                 <CardDescription>
