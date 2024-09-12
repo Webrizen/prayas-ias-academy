@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/helpers/SmoothScroll";
 import Footer from "@/components/system/Footer";
 import { NextUIProvider } from "@nextui-org/react";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -120,6 +121,7 @@ export default function RootLayout({ children }) {
               />
             <Navbar />
             {children}
+            <Toaster />
             <Footer />
           </SmoothScroll>
         </NextUIProvider>

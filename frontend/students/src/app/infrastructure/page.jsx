@@ -133,7 +133,7 @@ export default function page() {
         </div>
         <Testimonial />
 
-        <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 text-center mt-20 mb-4">
+        <h2 id="faculty" className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 text-center mt-20 mb-4">
           Our Expert Faculty
         </h2>
         <p className="text-xl text-gray-700 text-center mb-16 font-light">
