@@ -5,6 +5,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 
+export const revalidate = 360;
+
 export async function generateMetadata({ params }, parent) {
   const post = await fetchSinglePost(params.slug);
   return {
@@ -207,7 +209,7 @@ export default async function Page({ params }) {
               </div>
             </div>
             <div className="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-950">
-              <h3 className="text-lg font-semibold">Categories</h3>
+              <h3 className="text-lg font-semibold">Category</h3>
               <div className="mt-4 space-y-2">
                 {post.categories.map((category) => (
                   <Link

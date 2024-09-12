@@ -5,6 +5,8 @@ import { timeAgo } from "@/utils/timeAgo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+export const revalidate = 360
+
 export const metadata = {
   title: 'Blogs',
   description: `Stay updated with Webrizen's blog! Discover the latest trends, tips, and insights in web design, development, mobile solutions, and digital marketing. Empower your projects with expert advice and innovative strategies from our experienced team.`,
