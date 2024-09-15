@@ -72,7 +72,7 @@ export default function AnimatedLink({ title, link }) {
                         character === " " ? (
                             <span key={i}>&nbsp;</span>
                         ) : (
-                            <AnimatedLetter character={character} animation={animation} />
+                            <AnimatedLetter key={i} character={character} animation={animation} />
                         )
                     )}
             </motion.span>

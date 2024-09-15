@@ -26,23 +26,30 @@ import AnimatedLink from "@/components/helpers/AnimatedLink";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import { fetchCourseTitlesAndSlugs } from "@/utils/fetchCourses";
+import { Spinner } from "@nextui-org/spinner";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const loadCourses = useCallback(async () => {
     try {
       const courseData = await fetchCourseTitlesAndSlugs();
-      setCourses(courseData);
+      setCourses(courseData.slice(0, 6));
     } catch (error) {
       console.error("Failed to fetch course data:", error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
     loadCourses();
   }, [loadCourses]);
+
   return (
     <>
       <header
@@ -72,6 +79,7 @@ export default function Navbar() {
             }`}
           >
             <AnimatedLink title="Home" link="/" />
+            <AnimatedLink title="About" link="/about" />
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -79,18 +87,27 @@ export default function Navbar() {
                     <Link href="/courses">Courses</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
-                    {courses.map((course) => (
-                      <Link
-                        key={course.slug}
-                        href={`/courses/${course.slug}`}
-                        legacyBehavior
-                        passHref
-                      >
-                        <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                          {course.title}
-                        </NavigationMenuLink>
-                      </Link>
-                    ))}
+                    {isLoading ? (
+                      <div className="flex justify-center gap-3 items-center w-full">
+                        <Spinner size="sm" />
+                        <span className="text-sm">Loading :/</span>
+                      </div>
+                    ) : hasError ? (
+                      <p className="text-red-500">Failed to load courses</p>
+                    ) : (
+                      courses.map((course) => (
+                        <Link
+                          key={course.slug}
+                          href={`/courses/${course.slug}`}
+                          legacyBehavior
+                          passHref
+                        >
+                          <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
+                            {course.title}
+                          </NavigationMenuLink>
+                        </Link>
+                      ))
+                    )}
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -205,6 +222,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
+            <AnimatedLink title="Blogs" link="/blogs" />
             <AnimatedLink title="Contact" link="/contact" />
           </nav>
           <div className="flex justify-end items-center gap-1">

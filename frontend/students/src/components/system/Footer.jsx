@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
 import { fetchCourseTitlesAndSlugs } from "@/utils/fetchCourses";
+import { Spinner } from "@nextui-org/react";
 
 // Footer component rendering items
 const FooterItem = ({ text, link }) => {

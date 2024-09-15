@@ -1,4 +1,4 @@
-import { Poppins, Unbounded } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/system/Navbar";
 import SmoothScroll from "@/components/helpers/SmoothScroll";
@@ -10,12 +10,6 @@ import { Toaster } from "@/components/ui/toaster";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-const unbounded = Unbounded({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 

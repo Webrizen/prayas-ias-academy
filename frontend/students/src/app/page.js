@@ -1,17 +1,9 @@
 "use client";
 import React from "react";
 import { Unbounded } from "next/font/google";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import {
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
-import { ArrowRight, BookOpen, Scale } from "lucide-react";
+import { ArrowRight, BookOpen, Scale, Trophy, Users, Book, Lightbulb, CheckCircle } from "lucide-react";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { SwipeCarousel } from "@/components/system/SwipeCarousel";
-import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
 import {
@@ -37,7 +29,21 @@ const unbounded = Unbounded({
 export default function Home() {
   return (
     <>
-      <section className="w-full min-h-screen bg-gray-50 bg-[url('/hero-bg.svg')] bg-center bg-cover flex items-center justify-center p-4">
+      <section className="w-full min-h-screen bg-gray-50 bg-[url('/hero-bg.svg')] bg-center bg-cover flex gap-y-6 flex-col items-center justify-center p-4">
+        <h1
+          className={`text-gray-900 dark:text-white text-center mx-auto max-w-6xl font-bold text-3xl/tight sm:text-5xl/tight lg:text-6xl/tight ${unbounded.className}`}
+        >
+          <span className="inline bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-yellow-500 via-purple-500 to-blue-500 bg-clip-text font-display tracking-tight text-transparent">
+            Welcome
+          </span>{" "}
+          to{" "}
+          <span className="inline bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-indigo-900 via-indigo-400 to-indigo-900 bg-clip-text font-display tracking-tight text-transparent">
+            Prayas IAS Academy
+          </span>
+        </h1>
+        <Badge className="text-2xl !bg-blue-500 !px-3 text-center">
+          Learn From Renowned & Experienced Faculties
+        </Badge>
         <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* UPSC Side */}
@@ -303,33 +309,39 @@ export default function Home() {
             Academy equips you with everything you need to conquer the UPSC and
             BPSC exams.
           </p>
+          <div className="flex md:flex-row flex-col justify-center space-x-4 space-y-4 items-center">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800">
+              <Trophy className="w-5 h-5 mr-2" />
+              98% Success Rate
+            </span>
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 text-indigo-800">
+              <Users className="w-5 h-5 mr-2" />
+              10,000+ Students Coached
+            </span>
+          </div>
         </div>
-        <BentoGrid className="container mx-auto md:auto-rows-[20rem] md:p-0 p-4">
-          {items.map((item, i) => (
-            <BentoGridItem
-              key={i}
-              title={item.title}
-              description={item.description}
-              header={item.header}
-              className={item.className}
-              icon={item.icon}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative max-w-7xl mx-auto">
+          {features.map((feature, index) => (
+            <div 
+              key={index} 
+              className={`bg-white p-8 rounded-lg border border-slate-200 transition-all duration-300 ease-in-out transform hover:-translate-y-1 ${
+                index === 0 ? 'lg:col-span-2' : ''
+              } ${index === 3 ? 'lg:col-span-3' : ''}`}
+            >
+              <feature.icon className="w-16 h-16 text-blue-600 mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
+              <p className="text-gray-600 mb-6">{feature.description}</p>
+              <ul className="space-y-2">
+                {feature.bulletPoints.map((point, idx) => (
+                  <li key={idx} className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-1" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </BentoGrid>
-      </section>
-      <section className="h-[40rem] w-full flex items-center justify-center overflow-hidden px-20">
-        <MaskContainer
-          revealText={
-            <p className="container mx-auto dark:text-slate-500 text-slate-900 text-center text-4xl font-bold !border-none">
-              "Unlock your true potential with guidance tailored for UPSC
-              success. Dare to dream, and let us help you make it a reality!"
-            </p>
-          }
-          className="h-[40rem] border rounded-md"
-        >
-          "Your journey to becoming a civil servant starts here. Step into the
-          future of focused, personalized UPSC preparation."
-        </MaskContainer>
+        </div>
       </section>
       <Contact />
     </>
@@ -342,48 +354,53 @@ const Skeleton = ({ gradient }) => (
   ></div>
 );
 
-const items = [
+const features = [
   {
-    title: "Tailored Study Plans",
-    description:
-      "Receive personalized strategies to tackle the syllabus efficiently, tailored to your strengths and weaknesses.",
-    header: (
-      <Skeleton gradient="bg-gradient-to-tl from-orange-700 via-orange-500 to-orange-300" />
-    ),
-    className: "md:col-span-2 border border-slate-200",
-    icon: <IconClipboardCopy className="h-16 w-16 text-neutral-500" />,
+    icon: Book,
+    title: "Comprehensive Study Material",
+    description: "Access meticulously curated content covering every aspect of the UPSC/BPSC syllabus, designed to give you a competitive edge in your preparation.",
+    bulletPoints: [
+      "Regularly updated study materials aligned with the latest exam patterns",
+      "Extensive question banks with detailed explanations",
+      "Specialized notes for quick revision and last-minute preparation",
+      "Access to digital library with thousands of relevant e-books and journals"
+    ]
   },
   {
-    title: "Mock Tests & Detailed Analysis",
-    description:
-      "Participate in simulated exams that mirror the real UPSC experience and receive in-depth feedback.",
-    header: (
-      <Skeleton gradient="bg-gradient-to-tr from-emerald-500 via-cyan-700 to-blue-500" />
-    ),
-    className: "md:col-span-1 border border-slate-200",
-    icon: <IconFileBroken className="h-16 w-16 text-neutral-500" />,
+    icon: Users,
+    title: "Expert Faculty",
+    description: "Learn from a team of experienced educators and former civil servants who bring real-world insights and expertise to your preparation journey.",
+    bulletPoints: [
+      "Lectures by IAS, IPS, and other top-ranked officers",
+      "One-on-one mentoring sessions with subject matter experts",
+      "Guest lectures by prominent administrators and policymakers",
+      "Regular doubt-clearing sessions and personalized guidance"
+    ]
   },
   {
-    title: "Expert Faculty Support",
-    description:
-      "Learn from experienced educators with years of expertise in civil service exam coaching.",
-    header: (
-      <Skeleton gradient="bg-gradient-to-t from-teal-400 via-emerald-500 to-green-600" />
-    ),
-    className: "md:col-span-1 border border-slate-200",
-    icon: <IconSignature className="h-16 w-16 text-neutral-500" />,
+    icon: Trophy,
+    title: "Proven Track Record",
+    description: "Our consistently high success rate in UPSC and BPSC examinations speaks volumes about our teaching methodology and unwavering student support.",
+    bulletPoints: [
+      "Over 500 selections in various civil services in the last 5 years",
+      "Rank holders in top 10 positions for consecutive years",
+      "98% success rate in preliminary examinations",
+      "Dedicated support for interview preparation and personality development"
+    ]
   },
   {
-    title: "Comprehensive Resource Library",
-    description:
-      "Access an extensive range of study materials, video lectures, and notes curated for comprehensive learning.",
-    header: (
-      <Skeleton gradient="bg-gradient-to-tr from-indigo-700 via-blue-800 to-cyan-900" />
-    ),
-    className: "md:col-span-2 border border-slate-200",
-    icon: <IconTableColumn className="h-16 w-16 text-neutral-500" />,
-  },
-];
+    icon: Lightbulb,
+    title: "Innovative Teaching Methods",
+    description: "Experience a perfect blend of traditional and modern learning techniques designed to enhance your understanding, retention, and application of concepts.",
+    bulletPoints: [
+      "Interactive live online classes with real-time doubt resolution",
+      "AI-powered personalized learning paths and performance analytics",
+      "Virtual reality simulations for mock interviews and group discussions",
+      "Gamified learning modules for engaging and effective study sessions",
+      "Mobile app for on-the-go learning and quick revision"
+    ]
+  }
+]
 
 const reviews = [
   {
