@@ -1,7 +1,16 @@
 "use client";
 import React from "react";
 import { Unbounded } from "next/font/google";
-import { ArrowRight, BookOpen, Scale, Trophy, Users, Book, Lightbulb, CheckCircle } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Scale,
+  Trophy,
+  Users,
+  Book,
+  Lightbulb,
+  CheckCircle,
+} from "lucide-react";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { SwipeCarousel } from "@/components/system/SwipeCarousel";
 import { cn } from "@/lib/utils";
@@ -44,6 +53,69 @@ export default function Home() {
         <Badge className="text-2xl !bg-blue-500 !px-3 text-center">
           Learn From Renowned & Experienced Faculties
         </Badge>
+        <div className="container mx-auto grid md:grid-cols-2 grid-cols-1 gap-3 md:px-10 px-2">
+          <CardSpotlight className="h-max w-full">
+            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
+              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
+                English
+              </Badge>
+              <CardHeader>
+                <CardTitle className="text-center">
+                  Prayas IAS Academy
+                </CardTitle>
+                <CardDescription className="text-center">
+                  Big Learnings Made Easy
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-2 text-center">
+                <Button>General Studies</Button>
+                <Button>Optional</Button>
+                <Button>AIM</Button>
+                <Button>Test Series</Button>
+                <Button>CSAT Course</Button>
+                <Button>Current Affairs</Button>
+              </CardContent>
+              <CardFooter className="flex justify-center items-center">
+                <Button variant="secondary">Explore English Courses</Button>
+              </CardFooter>
+            </Card>
+          </CardSpotlight>
+
+          <CardSpotlight className="h-max w-full">
+            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
+              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
+                हिंदी
+              </Badge>
+              <CardHeader>
+                <CardTitle className="text-center">
+                  Prayas IAS Academy
+                </CardTitle>
+                <CardDescription className="text-center">
+                  बड़ी सीखें सरल बनाएं
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-2 text-center">
+                <Button>सामान्य अध्ययन</Button>
+                <Button>वैकल्पिक</Button>
+                <Button>AIM (हिंदी)</Button>
+                <Button>टेस्ट सीरीज</Button>
+                <Button>CSAT कोर्स</Button>
+                <Button>करेंट अफेयर्स</Button>
+              </CardContent>
+              <CardFooter className="flex justify-center items-center">
+                <Button variant="secondary">हिंदी कोर्सेज देखें</Button>
+              </CardFooter>
+            </Card>
+          </CardSpotlight>
+        </div>
+        <div className="container mx-auto overflow-hidden">
+          <Marquee pauseOnHover className="[--duration:20s] mx-auto">
+            <Badge>Delhi Centre</Badge>
+            <Badge>Jaipur Centre</Badge>
+            <Badge>Prayagraj Centre</Badge>
+            <Badge>Bhopal Centre</Badge>
+          </Marquee>
+        </div>
         <div className="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* UPSC Side */}
@@ -203,69 +275,6 @@ export default function Home() {
         <div className="container mx-auto">
           <SwipeCarousel />
         </div>
-        <div className="container mx-auto grid md:grid-cols-2 grid-cols-1 gap-3 md:px-10 px-2">
-          <CardSpotlight className="h-max w-full">
-            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
-              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
-                English
-              </Badge>
-              <CardHeader>
-                <CardTitle className="text-center">
-                  Prayas IAS Academy
-                </CardTitle>
-                <CardDescription className="text-center">
-                  Big Learnings Made Easy
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-2 text-center">
-                <Button>General Studies</Button>
-                <Button>Optional</Button>
-                <Button>AIM</Button>
-                <Button>Test Series</Button>
-                <Button>CSAT Course</Button>
-                <Button>Current Affairs</Button>
-              </CardContent>
-              <CardFooter className="flex justify-center items-center">
-                <Button variant="secondary">Explore English Courses</Button>
-              </CardFooter>
-            </Card>
-          </CardSpotlight>
-
-          <CardSpotlight className="h-max w-full">
-            <Card className="relative !bg-[rgba(225,225,225,0.1)] backdrop-blur-xl border-none">
-              <Badge className="absolute -top-2 right-0 left-0 mx-auto w-min">
-                हिंदी
-              </Badge>
-              <CardHeader>
-                <CardTitle className="text-center">
-                  Prayas IAS Academy
-                </CardTitle>
-                <CardDescription className="text-center">
-                  बड़ी सीखें सरल बनाएं
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-2 text-center">
-                <Button>सामान्य अध्ययन</Button>
-                <Button>वैकल्पिक</Button>
-                <Button>AIM (हिंदी)</Button>
-                <Button>टेस्ट सीरीज</Button>
-                <Button>CSAT कोर्स</Button>
-                <Button>करेंट अफेयर्स</Button>
-              </CardContent>
-              <CardFooter className="flex justify-center items-center">
-                <Button variant="secondary">हिंदी कोर्सेज देखें</Button>
-              </CardFooter>
-            </Card>
-          </CardSpotlight>
-        </div>
-        <div className="container mx-auto overflow-hidden">
-          <Marquee pauseOnHover className="[--duration:20s] mx-auto">
-            <Badge>Delhi Centre</Badge>
-            <Badge>Jaipur Centre</Badge>
-            <Badge>Prayagraj Centre</Badge>
-            <Badge>Bhopal Centre</Badge>
-          </Marquee>
-        </div>
       </section>
       <section className="min-h-max relative">
         <div className="px-8 pb-0 pt-16">
@@ -309,7 +318,7 @@ export default function Home() {
             Academy equips you with everything you need to conquer the UPSC and
             BPSC exams.
           </p>
-          <div className="flex md:flex-row flex-col justify-center space-x-4 space-y-4 items-center">
+          <div className="flex md:flex-row flex-col justify-center gap-4 items-center">
             <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-800">
               <Trophy className="w-5 h-5 mr-2" />
               98% Success Rate
@@ -322,11 +331,11 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative max-w-7xl mx-auto">
           {features.map((feature, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`bg-white p-8 rounded-lg border border-slate-200 transition-all duration-300 ease-in-out transform hover:-translate-y-1 ${
-                index === 0 ? 'lg:col-span-2' : ''
-              } ${index === 3 ? 'lg:col-span-3' : ''}`}
+                index === 0 ? "lg:col-span-2" : ""
+              } ${index === 3 ? "lg:col-span-3" : ""}`}
             >
               <feature.icon className="w-16 h-16 text-blue-600 mb-6" />
               <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
@@ -348,59 +357,57 @@ export default function Home() {
   );
 }
 
-const Skeleton = ({ gradient }) => (
-  <div
-    className={`flex flex-1 w-full h-full rounded-xl border border-transparent dark:border-white/[0.2] ${gradient} blur-3xl`}
-  ></div>
-);
-
 const features = [
   {
     icon: Book,
     title: "Comprehensive Study Material",
-    description: "Access meticulously curated content covering every aspect of the UPSC/BPSC syllabus, designed to give you a competitive edge in your preparation.",
+    description:
+      "Access meticulously curated content covering every aspect of the UPSC/BPSC syllabus, designed to give you a competitive edge in your preparation.",
     bulletPoints: [
       "Regularly updated study materials aligned with the latest exam patterns",
       "Extensive question banks with detailed explanations",
       "Specialized notes for quick revision and last-minute preparation",
-      "Access to digital library with thousands of relevant e-books and journals"
-    ]
+      "Access to digital library with thousands of relevant e-books and journals",
+    ],
   },
   {
     icon: Users,
     title: "Expert Faculty",
-    description: "Learn from a team of experienced educators and former civil servants who bring real-world insights and expertise to your preparation journey.",
+    description:
+      "Learn from a team of experienced educators and former civil servants who bring real-world insights and expertise to your preparation journey.",
     bulletPoints: [
       "Lectures by IAS, IPS, and other top-ranked officers",
       "One-on-one mentoring sessions with subject matter experts",
       "Guest lectures by prominent administrators and policymakers",
-      "Regular doubt-clearing sessions and personalized guidance"
-    ]
+      "Regular doubt-clearing sessions and personalized guidance",
+    ],
   },
   {
     icon: Trophy,
     title: "Proven Track Record",
-    description: "Our consistently high success rate in UPSC and BPSC examinations speaks volumes about our teaching methodology and unwavering student support.",
+    description:
+      "Our consistently high success rate in UPSC and BPSC examinations speaks volumes about our teaching methodology and unwavering student support.",
     bulletPoints: [
       "Over 500 selections in various civil services in the last 5 years",
       "Rank holders in top 10 positions for consecutive years",
       "98% success rate in preliminary examinations",
-      "Dedicated support for interview preparation and personality development"
-    ]
+      "Dedicated support for interview preparation and personality development",
+    ],
   },
   {
     icon: Lightbulb,
     title: "Innovative Teaching Methods",
-    description: "Experience a perfect blend of traditional and modern learning techniques designed to enhance your understanding, retention, and application of concepts.",
+    description:
+      "Experience a perfect blend of traditional and modern learning techniques designed to enhance your understanding, retention, and application of concepts.",
     bulletPoints: [
       "Interactive live online classes with real-time doubt resolution",
       "AI-powered personalized learning paths and performance analytics",
       "Virtual reality simulations for mock interviews and group discussions",
       "Gamified learning modules for engaging and effective study sessions",
-      "Mobile app for on-the-go learning and quick revision"
-    ]
-  }
-]
+      "Mobile app for on-the-go learning and quick revision",
+    ],
+  },
+];
 
 const reviews = [
   {
