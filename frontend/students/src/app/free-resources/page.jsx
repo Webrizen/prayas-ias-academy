@@ -12,9 +12,9 @@ export const metadata = {
   },
 };
 
-const FeatureItem = ({ title, description, slug, icon: Icon }) => {
+const FeatureItem = ({ title, description, slug, icon: Icon, key }) => {
   return (
-    <div className="flex flex-col justify-between space-y-4 bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.02)] hover:backdrop-blur-xl transition-all p-4 h-full rounded relative">
+    <div key={key} className="flex flex-col justify-between space-y-4 bg-[rgba(0,0,0,0.1)] hover:bg-[rgba(0,0,0,0.02)] hover:backdrop-blur-xl transition-all p-4 h-full rounded relative">
       <h1 className="flex text-lg font-semibold capitalize text-gray-900 dark:text-white">
         {title}
       </h1>
