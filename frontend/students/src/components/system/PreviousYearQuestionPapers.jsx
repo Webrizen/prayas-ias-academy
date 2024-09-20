@@ -13,10 +13,9 @@ export default function PreviousYearQuestionPapers() {
     const [selectedExam, setSelectedExam] = useState('UPSC')
 
     return (
-      <div className="w-full p-6 space-y-8">
-        <h1 className="text-3xl font-bold text-center mb-8">Previous Year Question Papers</h1>
+      <div className="w-full p-1 space-y-8">
         
-        <div className="flex justify-center space-x-4 mb-8">
+        <div className="flex justify-left items-center w-min bg-slate-300 rounded-md p-2">
           {exams.map((exam) => (
             <Toggle
               key={exam}

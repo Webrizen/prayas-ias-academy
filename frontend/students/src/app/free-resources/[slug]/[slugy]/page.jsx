@@ -4,6 +4,14 @@ import { Button } from "@/components/ui/button";
 import { timeAgo } from "@/utils/timeAgo";
 import { getImage } from "@/utils/getImage";
 import { PortableText } from "next-sanity";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const components = {
   types: {
@@ -61,7 +69,23 @@ export default async function Page({ params }) {
     getImage(CurrentAffairs.author.image) || "https://github.com/shadcn.png";
   return (
     <>
-      <div className="max-w-4xl mx-auto flex flex-col gap-4 my-4">
+      <div className="max-w-4xl mx-auto flex flex-col gap-4 my-4 mt-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/free-resources">Free Resources</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href={`/free-resources/${params.slug}`}>{params.slug}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+            <BreadcrumbLink href={`/free-resources/${params.slug}/${params.slugy}`}>{params.slugy}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <h1 className="text-5xl font-bold w-full text-slate-900">
           {CurrentAffairs.title}
         </h1>
