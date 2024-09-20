@@ -1,6 +1,9 @@
 import React from "react";
+import { fetchCurrentAffair } from "@/utils/fetchCurrentAffairs";
+import { Code } from "@nextui-org/react";
 
-export default function CurrentAffairs() {
+export default async function CurrentAffairs() {
+  const CurrentAffair = await fetchCurrentAffair();
   return (
     <>
       <div className="text-center space-y-6 w-full mx-auto md:mx-0 md:text-left">
@@ -11,6 +14,9 @@ export default function CurrentAffairs() {
           <h2 className="text-3xl font-semibold text-blue-950 dark:text-gray-200 md:text-4xl xl:text-5xl leading-tight">
             From our latest Current Affairs
           </h2>
+        </div>
+        <div>
+          <Code>{CurrentAffair || "npx run dev"}</Code>
         </div>
       </div>
     </>

@@ -53,7 +53,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className="bg-[rgba(225,225,225,0.1)] backdrop-blur-2xl sticky top-0"
+        className="bg-[rgba(225,225,225,0.1)] backdrop-blur-2xl"
         style={{ zIndex: "9" }}
       >
         <div className="container mx-auto flex flex-row flex-wrap p-3 justify-between items-center">

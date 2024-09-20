@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Unbounded } from "next/font/google";
+import { Unbounded } from 'next/font/google';
 import {
   ArrowRight,
   BookOpen,
@@ -30,7 +30,7 @@ import { CardSpotlight } from "@/components/ui/card-spotlight";
 import Contact from "@/components/system/Contact";
 
 const unbounded = Unbounded({
-  subsets: ["latin"],
+  subsets: ["cyrillic"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
