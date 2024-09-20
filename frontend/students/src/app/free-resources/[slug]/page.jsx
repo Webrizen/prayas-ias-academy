@@ -2,6 +2,9 @@ import React from "react";
 import { Book, FileText, Globe, PenTool, TestTube } from "lucide-react";
 import PreviousYearQuestionPapers from "@/components/system/PreviousYearQuestionPapers";
 import CurrentAffairs from "@/components/system/CurrentAffairs";
+import { fetchCurrentAffair } from "@/utils/fetchCurrentAffairs";
+
+const CurrentAffair = await fetchCurrentAffair();
 
 const resources = [
   {
@@ -18,7 +21,7 @@ const resources = [
       "Stay updated with the latest current affairs relevant to your exams.",
     icon: Globe,
     slug: "current-affairs",
-    component: <CurrentAffairs />
+    component: <CurrentAffairs CurrentAffair={CurrentAffair} />
   },
   {
     title: "Test Series",
