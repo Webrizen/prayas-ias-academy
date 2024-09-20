@@ -72,11 +72,7 @@ export default function Navbar() {
             <span className="md:block hidden text-sm">Prayas IAS Academy</span>
           </Link>
           <nav
-            className={`lg:flex lg:flex-row flex-col justify-center md:relative absolute md:w-auto w-full left-0 right-0 md:top-auto top-16 z-50 text-sm items-center ${
-              isMenuOpen
-                ? "grid grid-cols-2 bg-white dark:bg-slate-900 p-4"
-                : " hidden"
-            }`}
+            className={`hidden lg:flex lg:flex-row flex-col justify-center md:relative absolute md:w-auto w-full left-0 right-0 md:top-auto top-16 z-50 text-sm items-center`}
           >
             <AnimatedLink title="Home" link="/" />
             <AnimatedLink title="About" link="/about" />
@@ -116,7 +112,7 @@ export default function Navbar() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="lg:inline-flex !bg-transparent dark:!bg-transparent !px-3 !py-0 rounded-full text-slate-700 dark:text-slate-300 dark:hover:text-blue-300 items-center hover:text-blue-500 justify-center hover:bg-slate-100 dark:hover:!bg-[rgba(225,225,225,0.1)]">
-                  <Link href="/free-resources">Free Resources</Link>
+                    <Link href="/free-resources">Free Resources</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
                     <Link
@@ -225,6 +221,7 @@ export default function Navbar() {
             <AnimatedLink title="Blogs" link="/blogs" />
             <AnimatedLink title="Contact" link="/contact" />
           </nav>
+
           <div className="flex justify-end items-center gap-1">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -278,22 +275,86 @@ export default function Navbar() {
               className="inline-flex w-10 h-10 justify-center items-center hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 9h16.5m-16.5 6.75h16.5"
-                />
-              </svg>
+              {isMenuOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 9h16.5m-16.5 6.75h16.5"
+                  />
+                </svg>
+              )}
             </button>
           </div>
+          <nav
+            className={`lg:hidden ${isMenuOpen ? "grid" : "hidden"} w-full grid-cols-2 gap-2 bg-white border-b border-b-slate-400 py-4 px-2 z-50`}
+            style={{ zIndex: 99999999999999 }}
+          >
+            <AnimatedLink title="Home" link="/" />
+            <AnimatedLink title="About" link="/about" />
+            <AnimatedLink title="Blogs" link="/blogs" />
+            <AnimatedLink title="Contact" link="/contact" />
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
+                  Courses
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col w-full gap-0">
+                  {isLoading ? (
+                    <div className="flex justify-center gap-3 items-center w-full">
+                      <Spinner size="sm" />
+                      <span className="text-sm">Loading :/</span>
+                    </div>
+                  ) : hasError ? (
+                    <p className="text-red-500">Failed to load courses</p>
+                  ) : (
+                    courses.map((course) => (
+                      <Link key={course.slug} href={`/courses/${course.slug}`}>
+                        <Button variant="ghost">{course.title}</Button>
+                      </Link>
+                    ))
+                  )}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
+                  Free Resources
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col w-full gap-0">
+                  <Link href="/resources/study-materials">
+                    <Button variant="ghost">Study Materials</Button>
+                  </Link>
+                  <Link href="/resources/personal-consultation">
+                    <Button variant="ghost">Personal Consultation</Button>
+                  </Link>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </nav>
         </div>
       </header>
     </>
