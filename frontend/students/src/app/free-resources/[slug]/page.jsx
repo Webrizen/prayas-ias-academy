@@ -87,7 +87,7 @@ export default function page({ params }) {
   }
   return (
     <>
-      <section className="flex-1">
+      <section className="flex-1 -z-50">
         <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-12 md:px-6 md:py-16 lg:grid-cols-[1fr_300px] lg:gap-12 lg:px-8 lg:py-20">
           <div className="w-full p-2 bg-[rgba(225,225,225,0.1)] backdrop-blur-2xl rounded-xl">
             <div className="w-full p-4 flex flex-row justify-between items-center border-b-3 dark:border-b-slate-700 border-b-slate-300">

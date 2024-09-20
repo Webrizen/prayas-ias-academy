@@ -93,7 +93,7 @@ export default function Navbar() {
     <>
       <header
         className="bg-[rgba(225,225,225,0.1)] backdrop-blur-2xl"
-        style={{ zIndex: "9" }}
+        style={{ zIndex: 9999999 }}
       >
         <div className="container mx-auto flex flex-row flex-wrap p-3 justify-between items-center">
           <Link
@@ -156,7 +156,7 @@ export default function Navbar() {
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
                     {resources.map((resource) => (
                       <Link
-                        href={`/resources/${resource.slug}`}
+                        href={`/free-resources/${resource.slug}`}
                         key={resource.slug}
                         legacyBehavior
                         passHref
