@@ -25,8 +25,47 @@ import {
 import AnimatedLink from "@/components/helpers/AnimatedLink";
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
+import { Book, FileText, Globe, PenTool, TestTube } from "lucide-react";
 import { fetchCourseTitlesAndSlugs } from "@/utils/fetchCourses";
 import { Spinner } from "@nextui-org/spinner";
+
+const resources = [
+  {
+    title: "Previous Year Question Papers",
+    description:
+      "Access question papers from the last 5 years for UPSC and BPSC exams.",
+    icon: FileText,
+    slug: "previous-year-papers",
+  },
+  {
+    title: "Current Affairs",
+    description:
+      "Stay updated with the latest current affairs relevant to your exams.",
+    icon: Globe,
+    slug: "current-affairs",
+  },
+  {
+    title: "Test Series",
+    description:
+      "Practice with our comprehensive test series to evaluate your preparation.",
+    icon: TestTube,
+    slug: "test-series",
+  },
+  {
+    title: "Study Materials",
+    description:
+      "Access curated study materials covering all subjects for UPSC and BPSC.",
+    icon: Book,
+    slug: "study-materials",
+  },
+  {
+    title: "Mock Tests",
+    description:
+      "Take full-length mock tests simulating the actual exam environment.",
+    icon: PenTool,
+    slug: "mock-tests",
+  },
+];
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -115,105 +154,18 @@ export default function Navbar() {
                     <Link href="/free-resources">Free Resources</Link>
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="p-2 flex flex-col gap-1 whitespace-nowrap bg-white dark:bg-transparent shadow-lg rounded-lg">
-                    <Link
-                      href="/resources/study-materials"
-                      legacyBehavior
-                      passHref
-                    >
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        Study Materials
-                      </NavigationMenuLink>
-                    </Link>
-                    <Link
-                      href="/resources/personal-consultation"
-                      legacyBehavior
-                      passHref
-                    >
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        Personal Consultation
-                      </NavigationMenuLink>
-                    </Link>
-                    <Link
-                      href="/resources/previous-papers"
-                      legacyBehavior
-                      passHref
-                    >
-                      <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                        Previous Years’ Papers
-                      </NavigationMenuLink>
-                    </Link>
-                    <Accordion type="single" collapsible>
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                          Study Guides
-                        </AccordionTrigger>
-                        <AccordionContent className="flex flex-col w-full gap-0">
-                          <Link
-                            href="/resources/study-guides/general"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              General Study Guides
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/resources/study-guides/subject-wise"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              Subject-Wise Study Guides
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/resources/study-guides/current-affairs"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              Current Affairs Guides
-                            </NavigationMenuLink>
-                          </Link>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                    <Accordion type="single" collapsible>
-                      <AccordionItem value="item-2">
-                        <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                          Tools & Templates
-                        </AccordionTrigger>
-                        <AccordionContent className="flex flex-col w-full gap-0">
-                          <Link
-                            href="/resources/tools/timemanagement"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              Time Management Tools
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/resources/tools/notes-template"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              Notes Templates
-                            </NavigationMenuLink>
-                          </Link>
-                          <Link
-                            href="/resources/tools/study-plans"
-                            legacyBehavior
-                            passHref
-                          >
-                            <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
-                              Study Plans & Schedules
-                            </NavigationMenuLink>
-                          </Link>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                    {resources.map((resource) => (
+                      <Link
+                        href={`/resources/${resource.slug}`}
+                        key={resource.slug}
+                        legacyBehavior
+                        passHref
+                      >
+                        <NavigationMenuLink className="px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
+                          {resource.title}
+                        </NavigationMenuLink>
+                      </Link>
+                    ))}
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -340,17 +292,23 @@ export default function Navbar() {
               </AccordionItem>
             </Accordion>
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
+              <AccordionItem value="item-2">
                 <AccordionTrigger className="w-full px-3 py-2 hover:bg-slate-100 dark:hover:bg-[rgba(225,225,225,0.1)] rounded">
                   Free Resources
                 </AccordionTrigger>
                 <AccordionContent className="flex flex-col w-full gap-0">
-                  <Link href="/resources/study-materials">
-                    <Button variant="ghost">Study Materials</Button>
-                  </Link>
-                  <Link href="/resources/personal-consultation">
-                    <Button variant="ghost">Personal Consultation</Button>
-                  </Link>
+                  {resources.map((resource) => (
+                    <Link
+                      key={resource.slug}
+                      href={`/resources/${resource.slug}`}
+                      passHref
+                    >
+                      <Button variant="ghost">
+                        <resource.icon className="w-4 h-4 mr-2" />{" "}
+                        {resource.title}
+                      </Button>
+                    </Link>
+                  ))}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
